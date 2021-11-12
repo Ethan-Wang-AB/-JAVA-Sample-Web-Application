@@ -49,28 +49,28 @@
                 </c:forEach>  
         </table>
         <h2>${adminAction}</h2>
-        <form action="admin" method="post" style=" background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
+        <form action="admin" method="post" style="max-width: 500px; background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
 
          
-            <div class="col-auto"> 
-                <label>Username</label>
-                <input type="username" name="username" placeholder="username" value="${username}"  <c:if test="${isEdit==true}">disabled</c:if>>
+            <div class="col-auto" style="display:flex;"> 
+                <label style="flex:50%;">Username</label>
+                <input style="flex:50%;" type="username" name="username" placeholder="username" value="${username}"  <c:if test="${isEdit==true}">disabled</c:if>>
             </div>
-            <div class="col-auto"> 
-                <label>Email:</label>
-                <input type="email" name="email" placeholder="email" value="${email}">
+            <div class="col-auto" style="display:flex;"> 
+                <label style="flex:50%;" >Email:</label>
+                <input style="flex:50%;" type="email" name="email" placeholder="email" value="${email}">
             </div>
-            <div class="col-auto"> 
-                <label>First Name:</label>
-                <input type="text" name="firstname" placeholder="first name" value="${fistName}">
+            <div class="col-auto" style="display:flex;"> 
+                <label style="flex:50%;" >First Name:</label>
+                <input  style="flex:50%;" type="text" name="firstname" placeholder="first name" value="${fistName}">
             </div>
-            <div class="col-auto"> 
-                <label>Last Name:</label>
-                <input type="text" name="lastname" placeholder="last name" value="${lastName}">
+            <div class="col-auto" style="display:flex;"> 
+                <label style="flex:50%;">Last Name:</label>
+                <input style="flex:50%;" type="text" name="lastname" placeholder="last name" value="${lastName}">
             </div>
-            <div class="col-auto"> 
-                <label>Password:</label>
-                <input type="password" name="password" placeholder="password" value="${password}">
+            <div class="col-auto" style="display:flex;"> 
+                <label style="flex:50%;">Password:</label>
+                <input style="flex:50%;" type="password" name="password" placeholder="password" value="${password}">
             </div>
 
 
