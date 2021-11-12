@@ -54,6 +54,10 @@ public class InventoryService {
            
            
        }
+       
+       public void deleteItem(Integer itemID) throws Exception{
+       items.delete(itemID);
+       }
        public void insert(Categories category, String itemName, double price,Users owner) throws Exception{
            items.insert(category, itemName, price, owner);
            
@@ -66,7 +70,7 @@ public class InventoryService {
            for(int i=0;i<itemsVector.size();i++){
            total=total+itemsVector.get(i).getPrice();
            }
-       return total;
+       return Math.round(total*100)/100.0;
        
        }
        
@@ -78,7 +82,7 @@ public class InventoryService {
             for(int i=0;i<itemsArray.size();i++){
             total += itemsArray.get(i).getPrice();
             }
-          return total;
+          return  Math.round(total*100)/100.0;
        }
 
 }

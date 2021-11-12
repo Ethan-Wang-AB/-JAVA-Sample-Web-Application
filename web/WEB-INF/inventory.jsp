@@ -37,7 +37,7 @@
                     <td>${item.getItemName()}</td>
                     <td>${item.getPrice()}</td>
 
-                    <td><a href="<c:url value='users'>
+                    <td><a href="<c:url value='inventory'>
                                <c:param name='action' value="delete"/>
                                <c:param name='itemID' value="${item.itemID}"/>
                            </c:url>">delete</a></td>
@@ -63,7 +63,8 @@
             <input type="text" name="itemName">
             <br>
             <label>Item Price</label>
-            <input type="number" name="price">
+            <input type="number" step="0.01" name="price">
+                   
             <br>
             <input type="submit" name="add" value="Add">
         </form>

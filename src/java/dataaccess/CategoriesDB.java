@@ -33,8 +33,8 @@ public class CategoriesDB {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
         try {
-
-            Categories category = em.createNamedQuery("User.findByCategoryName", Categories.class).setParameter("categoryName", name).getSingleResult();
+            System.out.println("Category get : "+name);
+            Categories category = em.createNamedQuery("Categories.findByCategoryName", Categories.class).setParameter("categoryName", name).getSingleResult();
             return category;
         } finally {
             em.close();

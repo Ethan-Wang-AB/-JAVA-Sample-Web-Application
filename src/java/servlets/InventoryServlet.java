@@ -38,25 +38,40 @@ public class InventoryServlet extends HttpServlet {
         Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
         InventoryService inventoryService = new InventoryService();
         AccountService accountService = new AccountService();
-          Vector<Items>  inventoryList = new Vector();
-          Vector<Categories>categories;
+        Vector<Items> inventoryList = new Vector();
+        Vector<Categories> categories;
 
         double total;
         try {
-            categories=(Vector<Categories>) inventoryService.getCategory();
-            request.setAttribute("categories",categories);
+            categories = (Vector<Categories>) inventoryService.getCategory();
+            request.setAttribute("categories", categories);
             if (request.getParameterMap().containsKey("action") && request.getParameterMap().containsKey("itemID")) {
+                System.out.println("action in inventory is : " + request.getParameter("action"));
                 String itemID = request.getParameter("itemID");
                 Boolean deletion = inventoryService.delete(username, Integer.parseInt(itemID));
-                if (!deletion) {
+                System.out.println("deletion boolean : " + deletion);
+                if (deletion==true) {
                     request.setAttribute("errorMessage", "You cannot delete the item you do now own");
+                } else {
+                    inventoryService.deleteItem(Integer.parseInt(request.getParameter("itemID")));
+                    System.out.println("deletion in inventory implemented");
+                    Users owner = accountService.get(username);
+                    inventoryList = (Vector<Items>) inventoryService.getByOwner(owner);
+
+                    request.setAttribute("inventoryList", inventoryList);
+                    request.setAttribute("name", owner.getFirstName() + " " + owner.getLastName());
+                    total = inventoryService.getTotal(owner);
+                    request.setAttribute("total", total);
+                    getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
+                    return;
+
                 }
 
             }
             if (isAdmin) {
 
-                inventoryList =  (Vector<Items>) inventoryService.getAll();
-                
+                inventoryList = (Vector<Items>) inventoryService.getAll();
+
                 request.setAttribute("inventoryList", inventoryList);
                 total = inventoryService.getTotal();
                 request.setAttribute("name", "Administrator Management");
@@ -65,12 +80,11 @@ public class InventoryServlet extends HttpServlet {
             } else if (isAdmin == false) {
                 Users owner = accountService.get(username);
                 inventoryList = (Vector<Items>) inventoryService.getByOwner(owner);
-                
+
                 request.setAttribute("inventoryList", inventoryList);
-                 request.setAttribute("name", owner.getFirstName() + " "+owner.getLastName());
+                request.setAttribute("name", owner.getFirstName() + " " + owner.getLastName());
                 total = inventoryService.getTotal(owner);
                 request.setAttribute("total", total);
-                
 
             }
 
@@ -94,19 +108,20 @@ public class InventoryServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("usernameLogin");
+        String username = (String) session.getAttribute("username");
         Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
         AccountService accountService = new AccountService();
         InventoryService inventoryService = new InventoryService();
         double total;
-       Vector<Items> inventoryList;
-       Vector<Categories> categories;
+        Vector<Items> inventoryList;
+        Vector<Categories> categories;
         try {
+            System.out.println("inventory:  " + username);
             Users user = accountService.get(username);
             String categoryS = request.getParameter("category");
             String price = request.getParameter("price");
             String name = request.getParameter("itemName");
-            categories=(Vector<Categories>) inventoryService.getCategory();
+            categories = (Vector<Categories>) inventoryService.getCategory();
 
             if (categoryS != null && !categoryS.trim().equals("")
                     && price != null && !price.trim().equals("")
@@ -130,11 +145,11 @@ public class InventoryServlet extends HttpServlet {
                 total = inventoryService.getTotal();
 
             }
-                request.setAttribute("inventoryList", inventoryList);
+            request.setAttribute("inventoryList", inventoryList);
 
             request.setAttribute("total", total);
-           request.setAttribute("categories",categories);
-           System.out.println("categories  "+ categories.size());
+            request.setAttribute("categories", categories);
+            System.out.println("categories  " + categories.size());
             getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
             return;
 
