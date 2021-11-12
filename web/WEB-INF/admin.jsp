@@ -51,28 +51,26 @@
         <h2>${adminAction}</h2>
         <form action="users" method="post" style=" background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
 
-            <div class="col-auto"> 
-                <input type="hidden" name="action" value="edit">
-            </div>
+         
             <div class="col-auto"> 
                 <label>Username</label>
-                <input type="username" name="usernameNE" placeholder="username" value="${username}">
+                <input type="username" name="username" placeholder="username" value="${username}">
             </div>
             <div class="col-auto"> 
                 <label>Email:</label>
-                <input type="email" name="emailNE" placeholder="email" value="${email}">
+                <input type="email" name="email" placeholder="email" value="${email}">
             </div>
             <div class="col-auto"> 
                 <label>First Name:</label>
-                <input type="text" name="firstNameE" placeholder="first name" value="${fistName}">
+                <input type="text" name="firstname" placeholder="first name" value="${fistName}">
             </div>
             <div class="col-auto"> 
                 <label>Last Name:</label>
-                <input type="text" name="lastNameE" placeholder="last name" value="${lastName}">
+                <input type="text" name="lastname" placeholder="last name" value="${lastName}">
             </div>
             <div class="col-auto"> 
                 <label>Password:</label>
-                <input type="text" name="passwordE" placeholder="password" value="${password}">
+                <input type="text" name="password" placeholder="password" value="${password}">
             </div>
 
 
