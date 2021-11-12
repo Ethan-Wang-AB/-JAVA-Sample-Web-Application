@@ -18,7 +18,7 @@
         <h2>Menu</h2>
         <a href="inventory">Inventory</a><br>
         <a href="admin">Admin</a><br>
-        <a href="login">Logout</a><br>
+        <a href="login?logout">Logout</a><br>
         <h2>Manage Users</h2>
         <table >
             <tr>
@@ -54,7 +54,7 @@
          
             <div class="col-auto"> 
                 <label>Username</label>
-                <input type="username" name="username" placeholder="username" value="${username}">
+                <input type="username" name="username" placeholder="username" value="${username}"  >
             </div>
             <div class="col-auto"> 
                 <label>Email:</label>

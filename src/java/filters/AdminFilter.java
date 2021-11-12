@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,6 +20,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import services.AccountService;
 
 /**
  *
@@ -30,16 +33,20 @@ public class AdminFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        try {
             System.out.println("Start admin filter");
-    HttpSession session=((HttpServletRequest)request).getSession();
-    
-    Boolean isAdmin=(Boolean)session.getAttribute("isAdmin");
-
-    if (isAdmin==null || !isAdmin) {
-           ((HttpServletResponse)response).sendRedirect("inventory");
-           return;
-        } 
-               chain.doFilter(request,response);
+            HttpSession session=((HttpServletRequest)request).getSession();
+            
+            String username=(String) session.getAttribute("username");
+            AccountService accountService=new AccountService();
+            if (accountService.get(username).getIsAdmin()==false) {
+                ((HttpServletResponse)response).sendRedirect("inventory");
+                return;
+            }
+            chain.doFilter(request,response);
+        } catch (Exception ex) {
+            Logger.getLogger(AdminFilter.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

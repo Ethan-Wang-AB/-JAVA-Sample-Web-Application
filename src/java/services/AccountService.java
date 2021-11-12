@@ -20,7 +20,7 @@ public class AccountService {
         UserDB userDB = new UserDB();
         try {
             Users user = userDB.get(username);
-            if (password.equals(user.getPassword())) {
+            if (password.equals(user.getPassword()) && user.getActive()) {
                 return user;
             }
         } catch (Exception e) {
@@ -37,8 +37,9 @@ public class AccountService {
         return userDB.get(username);
     }
 
-    public void update(String previousName, String email, String username, String firstname, String lastname, String password) throws Exception {
-        userDB.update(username, username, email, firstname, lastname, true, false, password);
+    public void update(String previousName, String email, String firstname, String lastname, String password) throws Exception {
+        Users user=get(previousName);
+        userDB.update(previousName, email, firstname, lastname, user.getActive(), user.getIsAdmin(), password);
     }
 
     public void insert(String username,String email,String firstname, String lastname, String password) throws Exception {

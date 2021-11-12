@@ -39,8 +39,6 @@ public class AuthenticationFilter implements Filter {
     if(username==null){
        System.out.println("Authentication Null");
   
-       request.setAttribute("error", "The username or password is invalid");
-       request.setAttribute("errorExist", true);
                 
     ((HttpServletResponse)response).sendRedirect("login");
     return;

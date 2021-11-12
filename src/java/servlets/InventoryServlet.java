@@ -35,14 +35,16 @@ public class InventoryServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
-        Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+
         InventoryService inventoryService = new InventoryService();
         AccountService accountService = new AccountService();
+
         Vector<Items> inventoryList = new Vector();
         Vector<Categories> categories;
 
         double total;
         try {
+            Boolean isAdmin = accountService.get(username).getIsAdmin();
             categories = (Vector<Categories>) inventoryService.getCategory();
             request.setAttribute("categories", categories);
             if (request.getParameterMap().containsKey("action") && request.getParameterMap().containsKey("itemID")) {
@@ -50,7 +52,7 @@ public class InventoryServlet extends HttpServlet {
                 String itemID = request.getParameter("itemID");
                 Boolean deletion = inventoryService.delete(username, Integer.parseInt(itemID));
                 System.out.println("deletion boolean : " + deletion);
-                if (deletion==true) {
+                if (deletion == true) {
                     request.setAttribute("errorMessage", "You cannot delete the item you do now own");
                 } else {
                     inventoryService.deleteItem(Integer.parseInt(request.getParameter("itemID")));

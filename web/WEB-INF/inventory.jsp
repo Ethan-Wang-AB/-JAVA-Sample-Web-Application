@@ -21,7 +21,7 @@
   
      <a href="admin">Admin</a><br>
      </c:if>  
-        <a href="login">Logout</a><br>
+        <a href="login?logout">Logout</a><br>
         <h2>Inventory for ${name}</h2> 
         <table >
             <tr>

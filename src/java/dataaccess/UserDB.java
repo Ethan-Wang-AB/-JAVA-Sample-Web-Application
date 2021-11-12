@@ -43,20 +43,22 @@ public class UserDB {
         }
     }
 
-public void update(String usernameP,String usernameN, String email, String firstName,String lastName,boolean status,boolean isAdmin,String password) throws Exception {
+public void update(String usernameP, String email, String firstName,String lastName,boolean status,boolean isAdmin,String password) throws Exception {
                 EntityManager em = DBUtil.getEmFactory().createEntityManager();
              EntityTransaction trans=em.getTransaction();
         try {
+            System.out.println("userDB update       "+ usernameP+"   "+status+"     "+isAdmin+"     "+email+"     "+firstName);
+            
             Users user;
              user = em.find(Users.class,usernameP);
-             user.setUsername(usernameN);
+             
              user.setFirstName(firstName);
              user.setLastName(lastName);
              user.setActive(status);
              user.setPassword(password);
        
              user.setIsAdmin(isAdmin);
-                   trans.begin();
+             trans.begin();
              em.merge(user);
              trans.commit();
           

@@ -35,8 +35,8 @@ public class AdminServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             String usernameAdmin = (String) session.getAttribute("username");
-            boolean isAdmin = (boolean) session.getAttribute("isAdmin");
             AccountService accountService = new AccountService();
+     
 
             String adminAction = request.getParameter("action");
            Vector<Users> userList =  (Vector<Users>) accountService.getAll();
@@ -73,11 +73,17 @@ public class AdminServlet extends HttpServlet {
                     return;
 
                 } else if (request.getParameter("action").equals("delete")) {
+                    
                     username = request.getParameter("username");
+                    if(usernameAdmin.equals(username)){
+                      request.setAttribute("error", "You cannot delete yourself");
+                      request.setAttribute("errorExist", true);
+                    }else{
                     accountService.delete(username);
+                    }
                     userList = (Vector) accountService.getAll();
-
-                    request.setAttribute("userList", userList);
+                   session.setAttribute("adminAction", "Add User");
+                     request.setAttribute("userList", userList);
                     getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                     return;
                 }
@@ -89,7 +95,6 @@ public class AdminServlet extends HttpServlet {
 
                 session.setAttribute("adminAction", "Add User");
             }
-
             getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,21 +127,30 @@ public class AdminServlet extends HttpServlet {
                     && lastname != null && !lastname.trim().equals("")){
             if (adminAction.equals("Add User")) {
 
-                accountService.insert(username, email, password, firstname, lastname);
+                accountService.insert(username, email, firstname, lastname, password);
                 userList =  (Vector<Users>) accountService.getAll();
 
                     request.setAttribute("userList", userList);
                 getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                 return;
-            } else if (adminAction.equals("Edit User")) {
+            } else if (adminAction.equals("Edit User") ) {
 
-                accountService.update(previousUsername, username, email, firstname, lastname, password);
+                if(username.equals(previousUsername)){
+                accountService.update(previousUsername, email, firstname, lastname, password);
                 userList =  (Vector<Users>) accountService.getAll();
 
                     request.setAttribute("userList", userList);
                 getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                 return;
-
+}else{
+                userList =  (Vector<Users>) accountService.getAll();
+                   
+                    request.setAttribute("userList", userList);
+                       request.setAttribute("error", "username cannot be changed");
+            request.setAttribute("errorExist", true);
+                getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                return;   
+                }
             }
             }else{
              request.setAttribute("error", "user info is invalid");
@@ -145,7 +159,7 @@ public class AdminServlet extends HttpServlet {
             
                     request.setAttribute("userList", userList);
                                 session.setAttribute("adminAction", "Add User");
-
+      request.setAttribute("isAdmin", true);
                 getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                 return;
             }
