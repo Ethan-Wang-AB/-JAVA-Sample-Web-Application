@@ -76,7 +76,7 @@ public class InventoryService {
           Vector<Items>itemsArray;
         itemsArray = getByOwner(owner);
             for(int i=0;i<itemsArray.size();i++){
-            total += items.get(i).getPrice();
+            total += itemsArray.get(i).getPrice();
             }
           return total;
        }

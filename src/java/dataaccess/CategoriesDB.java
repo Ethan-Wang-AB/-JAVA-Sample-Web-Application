@@ -22,7 +22,7 @@ public class CategoriesDB {
 
         try {
             List<Categories> lists = new ArrayList<>();
-            lists = em.createNamedQuery("User.findAll", Categories.class).getResultList();
+            lists = em.createNamedQuery("Categories.findAll", Categories.class).getResultList();
             return lists;
         } finally {
             em.close();

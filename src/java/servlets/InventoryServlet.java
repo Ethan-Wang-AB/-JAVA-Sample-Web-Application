@@ -39,9 +39,12 @@ public class InventoryServlet extends HttpServlet {
         InventoryService inventoryService = new InventoryService();
         AccountService accountService = new AccountService();
           Vector<Items>  inventoryList = new Vector();
+          Vector<Categories>categories;
 
         double total;
         try {
+            categories=(Vector<Categories>) inventoryService.getCategory();
+            request.setAttribute("categories",categories);
             if (request.getParameterMap().containsKey("action") && request.getParameterMap().containsKey("itemID")) {
                 String itemID = request.getParameter("itemID");
                 Boolean deletion = inventoryService.delete(username, Integer.parseInt(itemID));
@@ -67,6 +70,7 @@ public class InventoryServlet extends HttpServlet {
                  request.setAttribute("name", owner.getFirstName() + " "+owner.getLastName());
                 total = inventoryService.getTotal(owner);
                 request.setAttribute("total", total);
+                
 
             }
 
@@ -96,11 +100,13 @@ public class InventoryServlet extends HttpServlet {
         InventoryService inventoryService = new InventoryService();
         double total;
        Vector<Items> inventoryList;
+       Vector<Categories> categories;
         try {
             Users user = accountService.get(username);
             String categoryS = request.getParameter("category");
             String price = request.getParameter("price");
             String name = request.getParameter("itemName");
+            categories=(Vector<Categories>) inventoryService.getCategory();
 
             if (categoryS != null && !categoryS.trim().equals("")
                     && price != null && !price.trim().equals("")
@@ -127,7 +133,8 @@ public class InventoryServlet extends HttpServlet {
                 request.setAttribute("inventoryList", inventoryList);
 
             request.setAttribute("total", total);
-
+           request.setAttribute("categories",categories);
+           System.out.println("categories  "+ categories.size());
             getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
             return;
 

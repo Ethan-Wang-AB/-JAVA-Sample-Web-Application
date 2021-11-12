@@ -16,9 +16,11 @@
     <body>
       <h1>Home Inventory!</h1>
               <h2>Menu</h2>
-
+   <c:if test="${isAdmin==true}">
      <a href="inventory">Inventory</a><br>
-        <a href="admin">Admin</a><br>
+  
+     <a href="admin">Admin</a><br>
+     </c:if>  
         <a href="login">Logout</a><br>
         <h2>Inventory for ${name}</h2> 
         <table >
@@ -52,7 +54,7 @@
             <label>Category</label>
             <select id="categories" name="category">
                 <c:forEach var="item" items="${categories}"> 
-                    <option value="${item.getCategory()}">${item.getCategory()}</option>
+                    <option value="${item.getCategoryName()}">${item.getCategoryName()}</option>
 
                 </c:forEach>
             </select>
