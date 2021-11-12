@@ -45,9 +45,18 @@ public class AdminServlet extends HttpServlet {
             String firstName = "";
             String lastName = "";
             String password = "";
+           
+            if(request.getParameterMap().containsKey("action")){
+                        session.setAttribute("adminAction", "Edit User");
+
+            }else{
+                        session.setAttribute("adminAction", "Add User");
+
+            }
+
             if (request.getParameter("username") != null) {
-                session.setAttribute("adminAction", "Edit User");
                 if (request.getParameter("action").equals("edit")) {
+
                     username = request.getParameter("username");
                     Users user = accountService.get(username);
 
@@ -94,6 +103,7 @@ public class AdminServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String adminAction = (String) session.getAttribute("adminAction");
+        System.out.println("adminAction: "+adminAction);
         AccountService accountService = new AccountService();
         try {
              Vector<Users> userList =  (Vector<Users>) accountService.getAll();

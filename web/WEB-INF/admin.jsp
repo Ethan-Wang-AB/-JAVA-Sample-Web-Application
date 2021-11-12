@@ -49,7 +49,7 @@
                 </c:forEach>  
         </table>
         <h2>${adminAction}</h2>
-        <form action="users" method="post" style=" background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
+        <form action="admin" method="post" style=" background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
 
          
             <div class="col-auto"> 
@@ -70,7 +70,7 @@
             </div>
             <div class="col-auto"> 
                 <label>Password:</label>
-                <input type="text" name="password" placeholder="password" value="${password}">
+                <input type="password" name="password" placeholder="password" value="${password}">
             </div>
 
 
