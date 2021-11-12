@@ -36,21 +36,20 @@ public class AdminServlet extends HttpServlet {
             HttpSession session = request.getSession();
             String usernameAdmin = (String) session.getAttribute("username");
             AccountService accountService = new AccountService();
-     
 
             String adminAction = request.getParameter("action");
-           Vector<Users> userList =  (Vector<Users>) accountService.getAll();
+            Vector<Users> userList = (Vector<Users>) accountService.getAll();
             String username = "";
             String email = "";
             String firstName = "";
             String lastName = "";
             String password = "";
-           
-            if(request.getParameterMap().containsKey("action")){
-                        session.setAttribute("adminAction", "Edit User");
 
-            }else{
-                        session.setAttribute("adminAction", "Add User");
+            if (request.getParameterMap().containsKey("action")) {
+                session.setAttribute("adminAction", "Edit User");
+
+            } else {
+                session.setAttribute("adminAction", "Add User");
 
             }
 
@@ -68,31 +67,32 @@ public class AdminServlet extends HttpServlet {
                     session.setAttribute("previousUsername", username);
                     userList = (Vector) accountService.getAll();
                     request.setAttribute("userList", userList);
-
+                    request.setAttribute("isEdit", true);
                     getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                     return;
 
                 } else if (request.getParameter("action").equals("delete")) {
-                    
+
                     username = request.getParameter("username");
-                    if(usernameAdmin.equals(username)){
-                      request.setAttribute("error", "You cannot delete yourself");
-                      request.setAttribute("errorExist", true);
-                    }else{
-                    accountService.delete(username);
+                    if (usernameAdmin.equals(username)) {
+                        request.setAttribute("error", "You cannot delete yourself");
+                        request.setAttribute("errorExist", true);
+                    } else {
+                        accountService.delete(username);
                     }
                     userList = (Vector) accountService.getAll();
-                   session.setAttribute("adminAction", "Add User");
-                     request.setAttribute("userList", userList);
+                    session.setAttribute("adminAction", "Add User");
+                    request.setAttribute("userList", userList);
+                    request.setAttribute("isEdit", false);
                     getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                     return;
                 }
             } else {
-               
-                  userList = (Vector) accountService.getAll();
-                  
-                    request.setAttribute("userList", userList);
 
+                userList = (Vector) accountService.getAll();
+
+                request.setAttribute("userList", userList);
+                request.setAttribute("isEdit", false);
                 session.setAttribute("adminAction", "Add User");
             }
             getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
@@ -108,10 +108,10 @@ public class AdminServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String adminAction = (String) session.getAttribute("adminAction");
-        System.out.println("adminAction: "+adminAction);
+        System.out.println("adminAction: " + adminAction);
         AccountService accountService = new AccountService();
         try {
-             Vector<Users> userList =  (Vector<Users>) accountService.getAll();
+            Vector<Users> userList = (Vector<Users>) accountService.getAll();
             request.setAttribute("userList", userList);
             String username = request.getParameter("username");
             String email = request.getParameter("email");
@@ -119,54 +119,53 @@ public class AdminServlet extends HttpServlet {
             String lastname = request.getParameter("lastname");
             String password = request.getParameter("password");
             String previousUsername = (String) session.getAttribute("previousUsername");
-          
 
             if (username != null && !username.trim().equals("")
                     && email != null && !email.trim().equals("")
                     && firstname != null && !firstname.trim().equals("")
-                    && lastname != null && !lastname.trim().equals("") && email.contains("@")){
-            if (adminAction.equals("Add User")) {
+                    && lastname != null && !lastname.trim().equals("") && email.contains("@")) {
+                if (adminAction.equals("Add User")) {
 
-                accountService.insert(username, email, firstname, lastname, password);
-                userList =  (Vector<Users>) accountService.getAll();
-
-                    request.setAttribute("userList", userList);
-                getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
-                return;
-            } else if (adminAction.equals("Edit User") ) {
-
-                if(username.equals(previousUsername)){
-                accountService.update(previousUsername, email, firstname, lastname, password);
-                userList =  (Vector<Users>) accountService.getAll();
+                    accountService.insert(username, email, firstname, lastname, password);
+                    userList = (Vector<Users>) accountService.getAll();
 
                     request.setAttribute("userList", userList);
-                getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
-                return;
-}else{
-                userList =  (Vector<Users>) accountService.getAll();
-                   
-                    request.setAttribute("userList", userList);
-                       request.setAttribute("error", "username cannot be changed");
-            request.setAttribute("errorExist", true);
-                getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
-                return;   
+                    getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                    return;
+                } else if (adminAction.equals("Edit User")) {
+
+                    if (username.equals(previousUsername)) {
+                        accountService.update(previousUsername, email, firstname, lastname, password);
+                        userList = (Vector<Users>) accountService.getAll();
+
+                        request.setAttribute("userList", userList);
+                        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                        return;
+                    } else {
+                        userList = (Vector<Users>) accountService.getAll();
+
+                        request.setAttribute("userList", userList);
+                        request.setAttribute("error", "username cannot be changed");
+                        request.setAttribute("errorExist", true);
+                        getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                        return;
+                    }
                 }
-            }
-            }else{
-             request.setAttribute("error", "user info is invalid");
-            request.setAttribute("errorExist", true);
-             userList =(Vector<Users>) accountService.getAll();
-            
-                    request.setAttribute("userList", userList);
-                                session.setAttribute("adminAction", "Add User");
-      request.setAttribute("isAdmin", true);
+            } else {
+                request.setAttribute("error", "user info is invalid");
+                request.setAttribute("errorExist", true);
+                userList = (Vector<Users>) accountService.getAll();
+
+                request.setAttribute("userList", userList);
+                session.setAttribute("adminAction", "Add User");
+                request.setAttribute("isAdmin", true);
                 getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
                 return;
             }
         } catch (SQLException e) {
             request.setAttribute("error", "the username is existed already");
             request.setAttribute("errorExist", true);
-             getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
 
         } catch (Exception ex) {
             Logger.getLogger(AdminServlet.class.getName()).log(Level.SEVERE, null, ex);

@@ -54,7 +54,7 @@
          
             <div class="col-auto"> 
                 <label>Username</label>
-                <input type="username" name="username" placeholder="username" value="${username}"  >
+                <input type="username" name="username" placeholder="username" value="${username}"  <c:if test="${isEdit==true}">disabled</c:if>>
             </div>
             <div class="col-auto"> 
                 <label>Email:</label>
