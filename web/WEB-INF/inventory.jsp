@@ -17,10 +17,10 @@
       <h1>Home Inventory!</h1>
               <h2>Menu</h2>
 
-     <a href="inventory?Inventory">Inventory</a><br>
-        <a href="inventory?admin">Admin</a><br>
-        <a href="inventory?logout">Logout</a><br>
-        <h2>Inventory for ${user.getFirstName()+' '+user.getLastName()}</h2> 
+     <a href="inventory">Inventory</a><br>
+        <a href="admin">Admin</a><br>
+        <a href="login">Logout</a><br>
+        <h2>Inventory for ${name}</h2> 
         <table >
             <tr>
                 <th >Category</th> 
@@ -31,7 +31,8 @@
             </tr>
             <c:forEach var="item" items="${inventoryList}">
                 <tr>
-                    <td>${item.getCategory()}</td>
+                      <td>${item.getCategory().getCategoryName()}</td>
+                    <td>${item.getItemName()}</td>
                     <td>${item.getPrice()}</td>
 
                     <td><a href="<c:url value='users'>

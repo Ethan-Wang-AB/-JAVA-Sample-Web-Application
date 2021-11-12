@@ -16,9 +16,9 @@
     <body>
         <h1>Home Inventory!</h1>
         <h2>Menu</h2>
-        <a href="inventory?Inventory">Inventory</a><br>
-        <a href="inventory?admin">Admin</a><br>
-        <a href="inventory?logout">Logout</a><br>
+        <a href="inventory">Inventory</a><br>
+        <a href="admin">Admin</a><br>
+        <a href="login">Logout</a><br>
         <h2>Manage Users</h2>
         <table >
             <tr>
@@ -35,7 +35,7 @@
                     <td>${item.getFirstName()}</td>
                     <td>${item.getLastName()}</td>
                     <td>
-                        <a href="<c:url value='users'>
+                        <a href="<c:url value='admin'>
                                <c:param name='action' value='edit' />
                                <c:param name='username' value='${item.username}'/>
                            </c:url>" >edit</a>

@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
+       // System.out.println("doPost in login:::  "+username+"   "+password);
         AccountService as = new AccountService();
         Users user = as.login(username, password);
 
@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("usernameLogin", username);
+        session.setAttribute("username", username);
         session.setAttribute("isAdmin", user.getIsAdmin());
 
         if (user.getIsAdmin()) {

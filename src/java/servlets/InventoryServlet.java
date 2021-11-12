@@ -8,6 +8,9 @@ package servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -31,11 +34,12 @@ public class InventoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("usernameLogin");
+        String username = (String) session.getAttribute("username");
         Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
         InventoryService inventoryService = new InventoryService();
         AccountService accountService = new AccountService();
-        ArrayList<Items> inventoryList = new ArrayList<>();
+          Vector<Items>  inventoryList = new Vector();
+
         double total;
         try {
             if (request.getParameterMap().containsKey("action") && request.getParameterMap().containsKey("itemID")) {
@@ -48,16 +52,19 @@ public class InventoryServlet extends HttpServlet {
             }
             if (isAdmin) {
 
-                inventoryList = (ArrayList<Items>) inventoryService.getAll();
+                inventoryList =  (Vector<Items>) inventoryService.getAll();
+                
                 request.setAttribute("inventoryList", inventoryList);
                 total = inventoryService.getTotal();
-
+                request.setAttribute("name", "Administrator Management");
                 request.setAttribute("total", total);
 
             } else if (isAdmin == false) {
                 Users owner = accountService.get(username);
-                inventoryList = (ArrayList<Items>) inventoryService.getByOwner(owner);
+                inventoryList = (Vector<Items>) inventoryService.getByOwner(owner);
+                
                 request.setAttribute("inventoryList", inventoryList);
+                 request.setAttribute("name", owner.getFirstName() + " "+owner.getLastName());
                 total = inventoryService.getTotal(owner);
                 request.setAttribute("total", total);
 
@@ -88,7 +95,7 @@ public class InventoryServlet extends HttpServlet {
         AccountService accountService = new AccountService();
         InventoryService inventoryService = new InventoryService();
         double total;
-        ArrayList<Items> inventoryList;
+       Vector<Items> inventoryList;
         try {
             Users user = accountService.get(username);
             String categoryS = request.getParameter("category");
@@ -108,16 +115,16 @@ public class InventoryServlet extends HttpServlet {
             }
             if (!isAdmin) {
                 Users owner = accountService.get(username);
-                inventoryList = (ArrayList<Items>) inventoryService.getByOwner(owner);
+                inventoryList = (Vector<Items>) inventoryService.getByOwner(owner);
                 total = inventoryService.getTotal(owner);
                 request.setAttribute("total", total);
 
             } else {
-                inventoryList = (ArrayList<Items>) inventoryService.getAll();
+                inventoryList = (Vector<Items>) inventoryService.getAll();
                 total = inventoryService.getTotal();
 
             }
-            request.setAttribute("inventoryList", inventoryList);
+                request.setAttribute("inventoryList", inventoryList);
 
             request.setAttribute("total", total);
 

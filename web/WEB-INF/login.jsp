@@ -17,9 +17,15 @@
               <h1>Home Inventory</h1>
         <h2>Login</h2>
         <form action="login" method="post">
-            email: <input type="text" name="username"><br>
+            username: <input type="text" name="username"><br>
             password: <input type="password" name="password"><br>
             <input type="submit" value="Sign in">
         </form>
+        <c:if test="${errorExist==true}">
+
+          <p>${error}</p>
+ 
+           </c:if>
+    
     </body>
 </html>

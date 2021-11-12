@@ -37,7 +37,7 @@ public class AuthenticationFilter implements Filter {
     HttpSession session = ((HttpServletRequest)request).getSession();
     String username =(String)session.getAttribute("username");
     if(username==null){
-        System.out.println("Authentication Null");
+       System.out.println("Authentication Null");
   
        request.setAttribute("error", "The username or password is invalid");
        request.setAttribute("errorExist", true);

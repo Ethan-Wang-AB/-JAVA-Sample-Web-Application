@@ -8,7 +8,9 @@ package services;
 import dataaccess.CategoriesDB;
 import dataaccess.ItemsDB;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 import models.Categories;
 import models.Items;
 import models.Users;
@@ -26,8 +28,9 @@ public class InventoryService {
     
     }
     
-       public List<Items> getByOwner(Users owner) throws Exception{
-        return (List<Items>) owner.getItemsCollection();
+       public Vector<Items> getByOwner(Users owner) throws Exception{
+        
+           return   (Vector<Items>) owner.getItemsCollection();
     
     }
        public List<Categories> getCategory() throws Exception{
@@ -59,19 +62,20 @@ public class InventoryService {
        public double getTotal() throws Exception{
       
            double total=0; 
-           ArrayList<Items>items=(ArrayList<Items>) getAll();
-            for(int i=0;i<items.size();i++){
-            total += items.get(i).getPrice();
-            }
-          return total;
+         Vector<Items>itemsVector=(Vector<Items>) items.getAll();
+           for(int i=0;i<itemsVector.size();i++){
+           total=total+itemsVector.get(i).getPrice();
+           }
+       return total;
        
        }
        
        public double getTotal(Users owner) throws Exception{
           
            double total=0; 
-           ArrayList<Items>items=(ArrayList<Items>) getByOwner(owner);
-            for(int i=0;i<items.size();i++){
+          Vector<Items>itemsArray;
+        itemsArray = getByOwner(owner);
+            for(int i=0;i<itemsArray.size();i++){
             total += items.get(i).getPrice();
             }
           return total;

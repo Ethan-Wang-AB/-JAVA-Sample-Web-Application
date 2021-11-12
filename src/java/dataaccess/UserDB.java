@@ -24,7 +24,7 @@ public class UserDB {
 
         try {
             List<Users> lists=new ArrayList<>();
-             lists = em.createNamedQuery("User.findAll",Users.class).getResultList();
+             lists = em.createNamedQuery("Users.findAll",Users.class).getResultList();
             return lists;
         } finally {
             em.close();
