@@ -38,7 +38,6 @@ public class InventoryServlet extends HttpServlet {
 
         InventoryService inventoryService = new InventoryService();
         AccountService accountService = new AccountService();
-
         Vector<Items> inventoryList = new Vector();
         Vector<Categories> categories;
 
@@ -77,6 +76,7 @@ public class InventoryServlet extends HttpServlet {
                 request.setAttribute("inventoryList", inventoryList);
                 total = inventoryService.getTotal();
                 request.setAttribute("name", "Administrator Management");
+                request.setAttribute("isAdmin", isAdmin);
                 request.setAttribute("total", total);
 
             } else if (isAdmin == false) {

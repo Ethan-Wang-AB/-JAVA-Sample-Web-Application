@@ -14,17 +14,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-      <h1>Home Inventory!</h1>
-              <h2>Menu</h2>
-   <c:if test="${isAdmin==true}">
-     <a href="inventory">Inventory</a><br>
-  
-     <a href="admin">Admin</a><br>
-     </c:if>  
+        <h1>Home Inventory!</h1>
+        <h2>Menu</h2>
+        <c:if test="${isAdmin==true}">
+            <a href="inventory">Inventory</a><br>
+
+            <a href="admin">Admin</a><br>
+        </c:if>  
         <a href="login?logout">Logout</a><br>
         <h2>Inventory for ${name}</h2> 
         <table >
             <tr>
+                <th >Username</th> 
                 <th >Category</th> 
                 <th >Name</th> 
                 <th >Price</th> 
@@ -33,7 +34,8 @@
             </tr>
             <c:forEach var="item" items="${inventoryList}">
                 <tr>
-                      <td>${item.getCategory().getCategoryName()}</td>
+                    <td>${item.getOwner().getUsername()}</td>
+                    <td>${item.getCategory().getCategoryName()}</td>
                     <td>${item.getItemName()}</td>
                     <td>${item.getPrice()}</td>
 
@@ -43,7 +45,7 @@
                            </c:url>">delete</a></td>
                 </tr>
             </c:forEach>  
-                   <tr>
+            <tr>
                 <th >Total</th> 
                 <th ></th> 
                 <th >${total}</th> 
@@ -64,16 +66,16 @@
             <br>
             <label>Item Price</label>
             <input type="number" step="0.01" name="price">
-                   
+
             <br>
             <input type="submit" name="add" value="Add">
         </form>
-          <c:if test="${errorExist==true}">
+        <c:if test="${errorExist==true}">
 
-          <p>${errorMessage}</p>
- 
-           </c:if>
-                 <p>${message}</p>
+            <p>${errorMessage}</p>
+
+        </c:if>
+        <p>${message}</p>
         <p>${valueMessage}</p>
 
     </body>

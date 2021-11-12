@@ -124,7 +124,7 @@ public class AdminServlet extends HttpServlet {
             if (username != null && !username.trim().equals("")
                     && email != null && !email.trim().equals("")
                     && firstname != null && !firstname.trim().equals("")
-                    && lastname != null && !lastname.trim().equals("")){
+                    && lastname != null && !lastname.trim().equals("") && email.contains("@")){
             if (adminAction.equals("Add User")) {
 
                 accountService.insert(username, email, firstname, lastname, password);
