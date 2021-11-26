@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Inventory Page</title>
     </head>
     <body>
         <h1>Home Inventory!</h1>
@@ -21,7 +21,11 @@
 
             <a href="admin">Admin</a><br>
         </c:if>  
+        <a href="editprofile">editprofile</a><br>
         <a href="login?logout">Logout</a><br>
+         <c:if test="${isCompanyAdmin==true}">
+          <a href="companyadmin">companyadmin</a><br>
+                 </c:if>  
         <h2>Inventory for ${name}</h2> 
         <table >
             <tr>
@@ -29,19 +33,25 @@
                 <th >Category</th> 
                 <th >Name</th> 
                 <th >Price</th> 
-                <th >Action </th> 
+                <th>Edit</th>
+                <th >Delete </th> 
 
             </tr>
             <c:forEach var="item" items="${inventoryList}">
                 <tr>
-                    <td>${item.getOwner().getUsername()}</td>
+                    <td>${item.getOwner().getEmail()}</td>
                     <td>${item.getCategory().getCategoryName()}</td>
                     <td>${item.getItemName()}</td>
                     <td>${item.getPrice()}</td>
-
+                    <td>
+                        <a href="<c:url value='inventory'>
+                               <c:param name='action' value='edit' />
+                               <c:param name='itemID' value='${item.itemId}'/>
+                           </c:url>" >edit</a>
+                    </td>
                     <td><a href="<c:url value='inventory'>
                                <c:param name='action' value="delete"/>
-                               <c:param name='itemID' value="${item.itemID}"/>
+                               <c:param name='itemID' value="${item.itemId}"/>
                            </c:url>">delete</a></td>
                 </tr>
             </c:forEach>  

@@ -9,22 +9,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import models.Categories;
-import models.Items;
-import models.Users;
+import models.Category;
+import models.Item;
+import models.User;
 
 /**
  *
  * @author 845593
  */
 public class ItemsDB {
-    public List<Items> getAll() throws Exception {
+    public List<Item> getAll() throws Exception {
     
          EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
         try {
-            List<Items> lists=new ArrayList<>();
-             lists =  (List<Items>) em.createNamedQuery("Items.findAll",Items.class).getResultList();
+            List<Item> lists;
+             lists =  em.createNamedQuery("Item.findAll",Item.class).getResultList();
             return lists;
         } finally {
             em.close();
@@ -44,29 +44,29 @@ public class ItemsDB {
         }
     }  
 */
-    public Items get(Integer itemID) throws Exception {
+    public Item get(Integer itemID) throws Exception {
     
          EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
         try {
-            Items item;
-              item= em.find(Items.class,itemID);
+            Item item;
+              item= em.find(Item.class,itemID);
             return item;
         } finally {
             em.close();
         }
     }  
-public void insert( Categories category, String name, double price, Users owner) throws Exception {
+public void insert( Category category, String name, double price, User owner) throws Exception {
                      EntityManager em = DBUtil.getEmFactory().createEntityManager();
              EntityTransaction trans=em.getTransaction();
         try {
-            Items item=new Items();            
+            Item item=new Item();            
            item.setCategory(category);
            item.setItemName(name);
            item.setPrice(price);
            item.setOwner(owner);
-           owner.getItemsCollection().add(item);
-           category.getItemsCollection().add(item);
+           owner.getItemList().add(item);
+           category.getItemList().add(item);
              trans.begin();
              em.persist(item);
              em.merge(owner);
@@ -85,13 +85,13 @@ public void delete(Integer itemID) throws Exception {
              EntityTransaction trans=em.getTransaction();
         try {
       
-            Items item;
+            Item item;
             
-             item = em.find(Items.class,itemID);
-            Users user=item.getOwner();
-            user.getItemsCollection().remove(item);
-            Categories category=item.getCategory();
-            category.getItemsCollection().remove(item);
+             item = em.find(Item.class,itemID);
+            User user=item.getOwner();
+            user.getItemList().remove(item);
+            Category category=item.getCategory();
+            category.getItemList().remove(item);
              trans.begin();
              em.remove(item);
              em.merge(user);

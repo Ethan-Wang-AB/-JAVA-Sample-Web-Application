@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.Users;
+import models.User;
 import services.AccountService;
 
 /**
@@ -29,19 +29,26 @@ public class LoginServlet extends HttpServlet {
        if(request.getParameterMap().containsKey("logout")){
                    request.setAttribute("error", "You are successfully log out");
             request.setAttribute("errorExist", true);
+                    getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+
        
-       }
+       }else if(request.getParameterMap().containsKey("registration")){
+          request.setAttribute("errorExist",true);
+            request.setAttribute("error","registration successful");
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-    }
+    }else{
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+       }
+}
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         // System.out.println("doPost in login:::  "+username+"   "+password);
         AccountService as = new AccountService();
-        Users user = as.login(username, password);
+        User user = as.login(email, password);
 
         if (user == null) {
             request.setAttribute("error", "The username or password is invalid");
@@ -51,11 +58,16 @@ public class LoginServlet extends HttpServlet {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("username", username);
+        session.setAttribute("email", email);
 
-        if (user.getIsAdmin()) {
+        if (user.getRole().getRoleId()==1) {
+        
             response.sendRedirect("admin");
-        } else {
+        } else if(user.getRole().getRoleId()==3){
+              response.sendRedirect("companyadmin");
+
+        }
+        else{
             response.sendRedirect("inventory");
         }
     }

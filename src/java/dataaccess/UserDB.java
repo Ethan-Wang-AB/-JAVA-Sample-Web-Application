@@ -9,57 +9,65 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import models.Categories;
-import models.Items;
-import models.Users;
+import models.Category;
+import models.Company;
+import models.Item;
+import models.Role;
+import models.User;
 
 /**
  *
  * @author 845593
  */
 public class UserDB {
-     public List<Users> getAll() throws Exception {
+     public List<User> getAll() throws Exception {
     
          EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
         try {
-            List<Users> lists=new ArrayList<>();
-             lists = em.createNamedQuery("Users.findAll",Users.class).getResultList();
+            List<User> lists=new ArrayList<>();
+             lists = em.createNamedQuery("User.findAll",User.class).getResultList();
             return lists;
         } finally {
             em.close();
         }
     }
 
-    public Users get(String username) throws Exception {
+    public User get(String email) throws Exception {
            EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
         try {
-            Users user;
-             user = em.find(Users.class,username);
+            User user;
+           // System.out.println("userDB  "+email);
+             user = em.createNamedQuery("User.findByEmail",User.class).setParameter("email", email).getSingleResult();
             return user;
         } finally {
             em.close();
         }
     }
 
-public void update(String usernameP, String email, String firstName,String lastName,boolean status,boolean isAdmin,String password) throws Exception {
+public void update(String email, String firstName,String lastName,boolean status,Role role,String password,boolean active) throws Exception {
                 EntityManager em = DBUtil.getEmFactory().createEntityManager();
              EntityTransaction trans=em.getTransaction();
         try {
-            System.out.println("userDB update       "+ usernameP+"   "+status+"     "+isAdmin+"     "+email+"     "+firstName);
+          //  System.out.println("userDB update       "+ email+"   "+status+"     "+role+"     "+email+"     "+firstName);
             
-            Users user;
-             user = em.find(Users.class,usernameP);
-             
+            User user;
+             user = em.createNamedQuery("User.findByEmail",User.class).setParameter("email", email).getSingleResult();
+             Role rolePrevious=user.getRole();
+             role.getUserList().remove(user);
              user.setFirstName(firstName);
              user.setLastName(lastName);
              user.setActive(status);
              user.setPassword(password);
+             user.setActive(active);
        
-             user.setIsAdmin(isAdmin);
+             user.setRole(role);
+             role.getUserList().add(user);
              trans.begin();
              em.merge(user);
+             em.merge(role);
+             em.merge(rolePrevious);
              trans.commit();
           
         } catch(Exception ex){
@@ -72,40 +80,79 @@ public void update(String usernameP, String email, String firstName,String lastN
     }
 
 
-
-public void delete(String username) throws Exception {
-                       EntityManager em = DBUtil.getEmFactory().createEntityManager();
+public void update(User user) throws Exception {
+                EntityManager em = DBUtil.getEmFactory().createEntityManager();
              EntityTransaction trans=em.getTransaction();
         try {
-      
-            Users user;
-             user = em.find(Users.class,username);
-                   trans.begin();
-             em.remove(user);
+            //System.out.println("userDB update       "+ email+"   "+status+"     "+role+"     "+email+"     "+firstName);
+            
+     
+             
+             trans.begin();
+             em.merge(user);
+           
              trans.commit();
           
-        }catch(Exception ex){
+        } catch(Exception ex){
         trans.rollback();
-        } 
-        finally {
+        } finally {
             em.close();
-        }
+       }
+//        
+   
+    }
+public void delete(String email) throws Exception {
+                       EntityManager em = DBUtil.getEmFactory().createEntityManager();
+             EntityTransaction trans=em.getTransaction();
+//        try {
+             User user;
+             user = em.createNamedQuery("User.findByEmail",User.class).setParameter("email", email).getSingleResult();
+               System.out.println("userDB deleteion"+ user);
+             Role role=user.getRole();
+             Company company=user.getCompanyID();
+             company.getUserList().remove(user);
+             ItemsDB itemsDB=new ItemsDB();
+//             List<Item> list=itemsDB.getAll();
+//             for(int i=0;i<user.getItemList().size();i++){
+//             list.remove(user.getItemList().get(i));
+//             }
+//             System.out.println("item list in user db deletion  "+list);
+//             role.getUserList().remove(user);
+//             System.out.println("userDB delete from company   +"+company.getUserList());
+//            
+             trans.begin();
+             
+             em.remove(user);
+            // em.merge(list);
+             em.merge(role);
+             em.merge(company);
+             
+             trans.commit();
+             System.out.println(company.getUserList());
+          
+//        }catch(Exception ex){
+//        trans.rollback();
+//        } 
+//        finally {
+//            em.close();
+//        }
         
    
     }
 
   
-  public void insert(  String username,String email,String password,String firstname,String lastname) throws Exception {
+  public void insert(String email,String password,String firstname,String lastname,Role role) throws Exception {
                      EntityManager em = DBUtil.getEmFactory().createEntityManager();
              EntityTransaction trans=em.getTransaction();
         try {
-            Users user=new Users();            
-            user.setUsername(username);
+            User user=new User();            
+           
             user.setEmail(email);
             user.setPassword(password);
             user.setFirstName(firstname);
             user.setLastName(lastname);
-
+            user.setRole(role);
+            user.setActive(true);
              trans.begin();
              em.persist(user);
              trans.commit();
@@ -118,5 +165,31 @@ public void delete(String username) throws Exception {
    
     }
 
+public User getByUUID(String uuid){
+         EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        try {
+   
+            User user = em.createNamedQuery("User.findByResetPasswordUuid",User.class).setParameter("resetPasswordUuid",uuid).getSingleResult();
+              //System.out.println("uuid in userDB after"+user.getResetPasswordUuid());
+            return user;
+        } finally {
+            em.close();
+        }
+   
+   }
 
+public List<User> getByCompany(Company company){
+         EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        try {
+   
+            List<User> list = em.createNamedQuery("User.findByCompanyID",User.class).setParameter("comgpanyID",company).getResultList();
+             // System.out.println("uuid in userDB after"+user.getResetPasswordUuid());
+            return list;
+        } finally {
+            em.close();
+        }
+   
+   }
 }

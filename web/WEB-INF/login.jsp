@@ -17,10 +17,12 @@
               <h1>Home Inventory</h1>
         <h2>Login</h2>
         <form action="login" method="post">
-            username: <input type="text" name="username"><br>
+            email: <input type="email" name="email"><br>
             password: <input type="password" name="password"><br>
             <input type="submit" value="Sign in">
         </form>
+          <a href="/cprg352-final-project/reset">forget password</a>
+            <a href="/cprg352-final-project/registration">create account</a>
         <c:if test="${errorExist==true}">
 
           <p>${error}</p>

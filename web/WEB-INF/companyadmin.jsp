@@ -17,8 +17,7 @@
         <h1>Home Inventory!</h1>
         <h2>Menu</h2>
         <a href="inventory">Inventory</a><br>
-        <a href="admin">Admin</a><br>
-              <a href="editcategory">Edit Category</a><br>
+            
         <a href="login?logout">Logout</a><br>
    
         <h2>Manage Users</h2>
@@ -41,13 +40,13 @@
                     <td>${item.getCompanyID().getCompanyName()}</td>
                     <td>${item.getActive()}</td>
                     <td>
-                        <a href="<c:url value='admin'>
+                        <a href="<c:url value='companyadmin'>
                                <c:param name='action' value='edit' />
                                <c:param name='email' value='${item.email}'/>
                            </c:url>" >edit</a>
                     </td>
                     <td>
-                        <a href="<c:url value='admin'>
+                        <a href="<c:url value='companyadmin'>
                                <c:param name='action' value='delete'/>
                                <c:param name='email' value='${item.email}'/>
                            </c:url>">delete</a>
@@ -78,12 +77,9 @@
 
             <div class="col-auto" style="display:flex;"> 
                 <label style="flex:50%;">Company Name:</label>
-                <select id="categories" name="category">
-                    <c:forEach var="item" items="${companies}"> 
-                        <option value="${item.getCompanyName()}">${item.getCompanyName()}</option>
-
-                    </c:forEach>
-                </select>            </div>
+                <label name="companyName">${companyName}</label> 
+            
+            </div>
             <div class="col-auto" style="display:flex;"> 
                 <label style="flex:50%;" >Status:</label>
                 <select id="status" name="status">

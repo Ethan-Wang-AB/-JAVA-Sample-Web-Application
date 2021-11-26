@@ -8,7 +8,8 @@ package dataaccess;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import models.Categories;
+import javax.persistence.EntityTransaction;
+import models.Category;
 
 /**
  *
@@ -16,28 +17,84 @@ import models.Categories;
  */
 public class CategoriesDB {
 
-    public List<Categories> getAll() throws Exception {
+    public List<Category> getAll() throws Exception {
 
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
         try {
-            List<Categories> lists = new ArrayList<>();
-            lists = em.createNamedQuery("Categories.findAll", Categories.class).getResultList();
+            List<Category> lists = new ArrayList<>();
+            lists = em.createNamedQuery("Category.findAll", Category.class).getResultList();
             return lists;
         } finally {
             em.close();
         }
     }
 
-    public Categories get(String name) throws Exception {
+    public Category get(String name) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
         try {
             System.out.println("Category get : "+name);
-            Categories category = em.createNamedQuery("Categories.findByCategoryName", Categories.class).setParameter("categoryName", name).getSingleResult();
+            Category category = em.createNamedQuery("Categories.findByCategoryName", Category.class).setParameter("categoryName", name).getSingleResult();
             return category;
         } finally {
             em.close();
         }
     }
+    
+    public void update(Category category) throws Exception {
+                EntityManager em = DBUtil.getEmFactory().createEntityManager();
+             EntityTransaction trans=em.getTransaction();
+        try {
+            //System.out.println("userDB update       "+ email+"   "+status+"     "+role+"     "+email+"     "+firstName);
+            
+     
+             
+             trans.begin();
+             em.merge(category);
+           
+             trans.commit();
+          
+        } catch(Exception ex){
+        trans.rollback();
+        } finally {
+            em.close();
+        }
+        
+   
+    }
+    
+     public Category get(Integer categoryId) throws Exception {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+
+        try {
+            System.out.println("Category get : "+categoryId);
+            Category category = em.createNamedQuery("Category.findByCategoryId", Category.class).setParameter("categoryId", categoryId).getSingleResult();
+            return category;
+        } finally {
+            em.close();
+        }
+    }
+      
+     public void insert(String categoryName){
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+             EntityTransaction trans=em.getTransaction();
+        try {
+            //System.out.println("userDB update       "+ email+"   "+status+"     "+role+"     "+email+"     "+firstName);
+            
+             
+             Category category=new Category(getAll().size()+1,categoryName);
+             trans.begin();
+             em.persist(category);
+           
+             trans.commit();
+          
+        } catch(Exception ex){
+        trans.rollback();
+        } finally {
+            em.close();
+        }
+     }
+
+
 }

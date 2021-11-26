@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import java.util.Vector;
 import java.util.logging.Level;
@@ -18,9 +19,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.Categories;
-import models.Items;
-import models.Users;
+import models.Category;
+import models.Item;
+import models.Role;
+import models.User;
 import services.AccountService;
 import services.InventoryService;
 
@@ -34,30 +36,30 @@ public class InventoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("username");
+        String email = (String) session.getAttribute("email");
 
         InventoryService inventoryService = new InventoryService();
         AccountService accountService = new AccountService();
-        Vector<Items> inventoryList = new Vector();
-        Vector<Categories> categories;
+        List<Item> inventoryList = new ArrayList<>();
+        List<Category> categories;
 
         double total;
         try {
-            Boolean isAdmin = accountService.get(username).getIsAdmin();
-            categories = (Vector<Categories>) inventoryService.getCategory();
+            Role role = accountService.get(email).getRole();
+            categories = inventoryService.getCategory();
             request.setAttribute("categories", categories);
             if (request.getParameterMap().containsKey("action") && request.getParameterMap().containsKey("itemID")) {
                 System.out.println("action in inventory is : " + request.getParameter("action"));
                 String itemID = request.getParameter("itemID");
-                Boolean deletion = inventoryService.delete(username, Integer.parseInt(itemID));
+                Boolean deletion = inventoryService.delete(email, Integer.parseInt(itemID));
                 System.out.println("deletion boolean : " + deletion);
                 if (deletion == true) {
                     request.setAttribute("errorMessage", "You cannot delete the item you do now own");
                 } else {
                     inventoryService.deleteItem(Integer.parseInt(request.getParameter("itemID")));
                     System.out.println("deletion in inventory implemented");
-                    Users owner = accountService.get(username);
-                    inventoryList = (Vector<Items>) inventoryService.getByOwner(owner);
+                    User owner = accountService.get(email);
+                    inventoryList =  inventoryService.getByOwner(owner);
 
                     request.setAttribute("inventoryList", inventoryList);
                     request.setAttribute("name", owner.getFirstName() + " " + owner.getLastName());
@@ -69,19 +71,19 @@ public class InventoryServlet extends HttpServlet {
                 }
 
             }
-            if (isAdmin) {
+            if (role.getRoleId()==1) {
 
-                inventoryList = (Vector<Items>) inventoryService.getAll();
+                inventoryList =  inventoryService.getAll();
 
                 request.setAttribute("inventoryList", inventoryList);
                 total = inventoryService.getTotal();
                 request.setAttribute("name", "Administrator Management");
-                request.setAttribute("isAdmin", isAdmin);
+                request.setAttribute("isAdmin", true);
                 request.setAttribute("total", total);
 
-            } else if (isAdmin == false) {
-                Users owner = accountService.get(username);
-                inventoryList = (Vector<Items>) inventoryService.getByOwner(owner);
+            } else if (role.getRoleId()==2) {
+                User owner = accountService.get(email);
+                inventoryList = inventoryService.getByOwner(owner);
 
                 request.setAttribute("inventoryList", inventoryList);
                 request.setAttribute("name", owner.getFirstName() + " " + owner.getLastName());
@@ -115,35 +117,35 @@ public class InventoryServlet extends HttpServlet {
         AccountService accountService = new AccountService();
         InventoryService inventoryService = new InventoryService();
         double total;
-        Vector<Items> inventoryList;
-        Vector<Categories> categories;
+      List<Item> inventoryList;
+        List<Category> categories;
         try {
             System.out.println("inventory:  " + username);
-            Users user = accountService.get(username);
+            User user = accountService.get(username);
             String categoryS = request.getParameter("category");
             String price = request.getParameter("price");
             String name = request.getParameter("itemName");
-            categories = (Vector<Categories>) inventoryService.getCategory();
+            categories =  inventoryService.getCategory();
 
             if (categoryS != null && !categoryS.trim().equals("")
                     && price != null && !price.trim().equals("")
                     && name != null && !name.trim().equals("")
                     && isNumeric(price)) {
-                Categories category = inventoryService.getTheCategory(categoryS);
+                Category category = inventoryService.getTheCategory(categoryS);
                 Double priceD = Double.parseDouble(price);
-                Users owner = accountService.get(username);
+                User owner = accountService.get(username);
                 inventoryService.insert(category, name, priceD, owner);
             } else {
                 request.setAttribute("errorMessage", "Your input is invalid for adding new item");
             }
             if (!isAdmin) {
-                Users owner = accountService.get(username);
-                inventoryList = (Vector<Items>) inventoryService.getByOwner(owner);
+                User owner = accountService.get(username);
+                inventoryList =  inventoryService.getByOwner(owner);
                 total = inventoryService.getTotal(owner);
                 request.setAttribute("total", total);
 
             } else {
-                inventoryList = (Vector<Items>) inventoryService.getAll();
+                inventoryList = inventoryService.getAll();
                 total = inventoryService.getTotal();
 
             }

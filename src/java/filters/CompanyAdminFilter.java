@@ -26,20 +26,29 @@ import services.AccountService;
  *
  * @author 845593
  */
-public class AdminFilter implements Filter {
+public class CompanyAdminFilter implements Filter {
+    
+    private static final boolean debug = true;
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException { }
+    // The filter configuration object we are associated with.  If
+    // this value is null, this filter instance is not currently
+    // configured. 
+    private FilterConfig filterConfig = null;
+    
+    public CompanyAdminFilter() {
+    }    
+    
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        try {
-            System.out.println("Start admin filter");
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain)
+            throws IOException, ServletException {
+                try {
+            System.out.println("Start Company admin filter");
             HttpSession session=((HttpServletRequest)request).getSession();
             
             String email=(String) session.getAttribute("email");
             AccountService accountService=new AccountService();
-            if (accountService.get(email).getRole().getRoleId()!=1) {
+            if (accountService.get(email).getRole().getRoleId()!=3) {
                 ((HttpServletResponse)response).sendRedirect("inventory");
                 return;
             }
@@ -47,11 +56,20 @@ public class AdminFilter implements Filter {
         } catch (Exception ex) {
             Logger.getLogger(AdminFilter.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
+    }
 
+   
+    
+
+ 
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
     
-
 }

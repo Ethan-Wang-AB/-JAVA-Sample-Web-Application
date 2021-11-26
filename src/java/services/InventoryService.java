@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
-import models.Categories;
-import models.Items;
-import models.Users;
+import models.Category;
+import models.Item;
+import models.User;
 
 /**
  *
@@ -23,28 +23,28 @@ public class InventoryService {
     private ItemsDB items=new ItemsDB();
     private CategoriesDB categories=new CategoriesDB();
     private AccountService accountService=new AccountService();
-    public List<Items> getAll() throws Exception{
+    public List<Item> getAll() throws Exception{
         return items.getAll();
     
     }
     
-       public Vector<Items> getByOwner(Users owner) throws Exception{
+       public List<Item> getByOwner(User owner) throws Exception{
         
-           return   (Vector<Items>) owner.getItemsCollection();
+           return   owner.getItemList();
     
     }
-       public List<Categories> getCategory() throws Exception{
+       public List<Category> getCategory() throws Exception{
        return categories.getAll();
        }
        
-           public Categories getTheCategory(String categoryName) throws Exception{
+           public Category getTheCategory(String categoryName) throws Exception{
        return categories.get(categoryName);
        }
        
-       public boolean delete(String username, Integer itemID) throws Exception{
+       public boolean delete(String email, Integer itemID) throws Exception{
           
-           Items item=items.get(itemID);
-           if(item.getOwner().equals(username)){
+           Item item=items.get(itemID);
+           if(item.getOwner().getEmail().equals(email)){
            items.delete(itemID);
            return true;
            }
@@ -58,7 +58,7 @@ public class InventoryService {
        public void deleteItem(Integer itemID) throws Exception{
        items.delete(itemID);
        }
-       public void insert(Categories category, String itemName, double price,Users owner) throws Exception{
+       public void insert(Category category, String itemName, double price,User owner) throws Exception{
            items.insert(category, itemName, price, owner);
            
        }
@@ -66,7 +66,7 @@ public class InventoryService {
        public double getTotal() throws Exception{
       
            double total=0; 
-         Vector<Items>itemsVector=(Vector<Items>) items.getAll();
+         List<Item>itemsVector= items.getAll();
            for(int i=0;i<itemsVector.size();i++){
            total=total+itemsVector.get(i).getPrice();
            }
@@ -74,10 +74,10 @@ public class InventoryService {
        
        }
        
-       public double getTotal(Users owner) throws Exception{
+       public double getTotal(User owner) throws Exception{
           
            double total=0; 
-          Vector<Items>itemsArray;
+          List<Item>itemsArray;
         itemsArray = getByOwner(owner);
             for(int i=0;i<itemsArray.size();i++){
             total += itemsArray.get(i).getPrice();
