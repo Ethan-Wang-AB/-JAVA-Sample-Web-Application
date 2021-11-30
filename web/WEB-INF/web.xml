@@ -76,6 +76,14 @@
         <servlet-name>PhotoServlet</servlet-name>
         <servlet-class>servlets.PhotoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TwoWayAuthentication</servlet-name>
+        <servlet-class>servlets.TwoWayAuthentication</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>servlets.ReportServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/admin</url-pattern>
@@ -111,6 +119,14 @@
     <servlet-mapping>
         <servlet-name>PhotoServlet</servlet-name>
         <url-pattern>/profilephoto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TwoWayAuthentication</servlet-name>
+        <url-pattern>/authentication</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/report</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

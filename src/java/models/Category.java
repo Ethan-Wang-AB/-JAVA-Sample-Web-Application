@@ -29,9 +29,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "category")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
+    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c where c.display=1")
     , @NamedQuery(name = "Category.findByCategoryId", query = "SELECT c FROM Category c WHERE c.categoryId = :categoryId")
-    , @NamedQuery(name = "Category.findByCategoryName", query = "SELECT c FROM Category c WHERE c.categoryName = :categoryName")})
+    , @NamedQuery(name = "Category.findByCategoryName", query = "SELECT c FROM Category c WHERE c.categoryName = :categoryName")
+    ,@NamedQuery(name = "Category.findMaxId", query = "SELECT max(c.categoryId) FROM Category c")   
+    , @NamedQuery(name = "Category.findByDisplay", query = "SELECT c FROM Category c WHERE c.display = :display")})
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +45,9 @@ public class Category implements Serializable {
     @Basic(optional = false)
     @Column(name = "category_name")
     private String categoryName;
+    @Basic(optional = false)
+    @Column(name = "display")
+    private boolean display;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Item> itemList;
 
@@ -53,9 +58,10 @@ public class Category implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Category(Integer categoryId, String categoryName) {
+    public Category(Integer categoryId, String categoryName, boolean display) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
+        this.display = display;
     }
 
     public Integer getCategoryId() {
@@ -72,6 +78,14 @@ public class Category implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public boolean getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(boolean display) {
+        this.display = display;
     }
 
     @XmlTransient

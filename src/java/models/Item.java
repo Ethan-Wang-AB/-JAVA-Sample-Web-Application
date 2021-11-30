@@ -27,10 +27,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "item")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i")
+    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i where i.display=1")
     , @NamedQuery(name = "Item.findByItemId", query = "SELECT i FROM Item i WHERE i.itemId = :itemId")
     , @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName")
-    , @NamedQuery(name = "Item.findByPrice", query = "SELECT i FROM Item i WHERE i.price = :price")})
+    , @NamedQuery(name = "Item.findByPrice", query = "SELECT i FROM Item i WHERE i.price = :price")
+    , @NamedQuery(name = "Item.findByPhotoPath", query = "SELECT i FROM Item i WHERE i.photoPath = :photoPath")
+    , @NamedQuery(name = "Item.findMaxId", query = "SELECT max(i.itemId) FROM Item i")    
+    , @NamedQuery(name = "Item.findByDisplay", query = "SELECT i FROM Item i WHERE i.display = :display")})
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +48,11 @@ public class Item implements Serializable {
     @Basic(optional = false)
     @Column(name = "price")
     private double price;
+    @Column(name = "photoPath")
+    private String photoPath;
+    @Basic(optional = false)
+    @Column(name = "display")
+    private boolean display;
     @JoinColumn(name = "category", referencedColumnName = "category_id")
     @ManyToOne(optional = false)
     private Category category;
@@ -59,10 +67,11 @@ public class Item implements Serializable {
         this.itemId = itemId;
     }
 
-    public Item(Integer itemId, String itemName, double price) {
+    public Item(Integer itemId, String itemName, double price, boolean display) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.price = price;
+        this.display = display;
     }
 
     public Integer getItemId() {
@@ -87,6 +96,22 @@ public class Item implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public boolean getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(boolean display) {
+        this.display = display;
     }
 
     public Category getCategory() {

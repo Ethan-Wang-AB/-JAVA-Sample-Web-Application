@@ -58,6 +58,7 @@
         <form action="editprofile" method="post">
             <input type="hidden" name="editAction" value="deactive">
             <input type="submit" name="submit" value="deactive account">
+            <button><a href="editprofile?twowayEnable">Enable Two Way Authentication</a></button>
 
         </form>
     </body>

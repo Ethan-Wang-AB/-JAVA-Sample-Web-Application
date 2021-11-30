@@ -38,7 +38,7 @@ public class UserDB {
 
         try {
             User user;
-           // System.out.println("userDB  "+email);
+            //System.out.println("userDB  "+email);
              user = em.createNamedQuery("User.findByEmail",User.class).setParameter("email", email).getSingleResult();
             return user;
         } finally {
@@ -104,31 +104,67 @@ public void update(User user) throws Exception {
 public void delete(String email) throws Exception {
                        EntityManager em = DBUtil.getEmFactory().createEntityManager();
              EntityTransaction trans=em.getTransaction();
-//        try {
+        try {
              User user;
              user = em.createNamedQuery("User.findByEmail",User.class).setParameter("email", email).getSingleResult();
                System.out.println("userDB deleteion"+ user);
+             user.setDisplay(false);
              Role role=user.getRole();
              Company company=user.getCompanyID();
              company.getUserList().remove(user);
              ItemsDB itemsDB=new ItemsDB();
-//             List<Item> list=itemsDB.getAll();
-//             for(int i=0;i<user.getItemList().size();i++){
-//             list.remove(user.getItemList().get(i));
-//             }
-//             System.out.println("item list in user db deletion  "+list);
+             List<Item> list=user.getItemList();
+             for(int i=list.size()-1;i>=0;i--){
+             list.get(i).setDisplay(false);
+             }
+           //  System.out.println("item list in user db deletion  "+list);
 //             role.getUserList().remove(user);
 //             System.out.println("userDB delete from company   +"+company.getUserList());
 //            
              trans.begin();
              
-             em.remove(user);
+             em.merge(user);
             // em.merge(list);
-             em.merge(role);
-             em.merge(company);
+         
              
              trans.commit();
-             System.out.println(company.getUserList());
+            // System.out.println(company.getUserList());
+          
+        }catch(Exception ex){
+        trans.rollback();
+        } 
+        finally {
+            em.close();
+        }
+        
+   
+    }
+
+
+public void recovery(User user) throws Exception {
+             EntityManager em = DBUtil.getEmFactory().createEntityManager();
+             EntityTransaction trans=em.getTransaction();
+//        try {
+         
+             user.setDisplay(true);
+           
+             
+             ItemsDB itemsDB=new ItemsDB();
+             List<Item> list=user.getItemList();
+             for(int i=list.size()-1;i>=0;i--){
+             list.get(i).setDisplay(true);
+             }
+             System.out.println("item list in user db recovery "+list);
+//             role.getUserList().remove(user);
+//             System.out.println("userDB delete from company   +"+company.getUserList());
+//            
+             trans.begin();
+             
+             em.merge(user);
+            // em.merge(list);
+         
+             
+             trans.commit();
           
 //        }catch(Exception ex){
 //        trans.rollback();
@@ -141,18 +177,20 @@ public void delete(String email) throws Exception {
     }
 
   
-  public void insert(String email,String password,String firstname,String lastname,Role role) throws Exception {
+  public void insert(String email,String password,String firstname,String lastname,Role role,Company company) throws Exception {
                      EntityManager em = DBUtil.getEmFactory().createEntityManager();
              EntityTransaction trans=em.getTransaction();
         try {
             User user=new User();            
-           
-            user.setEmail(email);
+             user.setEmail(email);
             user.setPassword(password);
             user.setFirstName(firstname);
             user.setLastName(lastname);
             user.setRole(role);
+            user.setCompanyID(company);
             user.setActive(true);
+            
+            
              trans.begin();
              em.persist(user);
              trans.commit();

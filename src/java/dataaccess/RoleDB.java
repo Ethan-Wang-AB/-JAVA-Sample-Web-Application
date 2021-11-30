@@ -22,7 +22,7 @@ public class RoleDB {
 
         try {
             List<Role> lists = new ArrayList<>();
-            lists = em.createNamedQuery("Categories.findAll", Role.class).getResultList();
+            lists = em.createNamedQuery("Role.findAll", Role.class).getResultList();
             return lists;
         } finally {
             em.close();
@@ -33,7 +33,7 @@ public class RoleDB {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
         try {
-            System.out.println("Category get : "+name);
+            System.out.println("Role get : "+name);
             Role role = em.createNamedQuery("Role.findByRoleName", Role.class).setParameter("roleName", name).getSingleResult();
             return role;
         } finally {

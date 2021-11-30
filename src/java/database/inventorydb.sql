@@ -8,6 +8,7 @@ USE `inventorydb`;
 CREATE TABLE IF NOT EXISTS `inventorydb`.`category` (
   `category_id` INT(11) NOT NULL AUTO_INCREMENT,
   `category_name` VARCHAR(45) NOT NULL,
+ `display`  TINYINT(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`category_id`));
 
 -- -----------------------------------------------------
@@ -39,7 +40,9 @@ CREATE TABLE IF NOT EXISTS `inventorydb`.`user` (
   `reset_password_uuid` VARCHAR(50),
 `direct_login_uuid` VARCHAR(50),
 `authen_uuid` VARCHAR(50),
+`registration_code` varchar(20),
    `photoPath` varchar(300),
+ `display`  TINYINT(1) NOT NULL DEFAULT '1',
  `companyID` INT(11) NOT NULL,
   PRIMARY KEY (`email`),
   CONSTRAINT `fk_user_role`
@@ -60,6 +63,8 @@ CREATE TABLE IF NOT EXISTS `inventorydb`.`item` (
   `item_name` VARCHAR(45) NOT NULL,
   `price` DOUBLE NOT NULL,
   `owner` VARCHAR(40) NOT NULL,
+ `photoPath` varchar(200),
+  `display`  TINYINT(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`item_id`),
   CONSTRAINT `fk_items_categories`
     FOREIGN KEY (`category`)

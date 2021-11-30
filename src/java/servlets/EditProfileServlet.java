@@ -40,10 +40,32 @@ public class EditProfileServlet extends HttpServlet {
             AccountService accountService = new AccountService();
             HttpSession session = request.getSession();
             String email = (String) session.getAttribute("email");
+            
+            
+            if(request.getParameterMap().containsKey("twowayEnable")){
+     
+               String emailLogin=email;
+      
+            session.setAttribute("emailTwoWay", emailLogin);
+           System.out.println("enable 2Way    "+emailLogin);
+           
+            User user=accountService.get(email);
+            int twoWay=(int) (Math.random()*10000/1);
+            user.setAuthenUuid(twoWay+"");
+            accountService.update(user);
+            
+            response.sendRedirect("login?twoway");
+            return;
+            
+            }
+            
+            
+            
+            
             // String img=request.getParame
-            System.out.println("edit profile  " + email);
+            //System.out.println("edit profile  " + email);
             User user = accountService.get(email);
-                  System.out.println("edit profile get name " + user);
+              //    System.out.println("edit profile get name " + user);
             request.setAttribute("user", user);
 //            if(user.getPhotoPath()!=null){
            String photopath =user.getPhotoPath();            
@@ -78,7 +100,7 @@ public class EditProfileServlet extends HttpServlet {
                //String extentions[]=fileName.split(".");
               // String extention=extentions[extentions.length-1];
                
-               System.out.println("extention+++"+fileName);
+              // System.out.println("extention+++"+fileName);
                 InputStream fileContent = filePart.getInputStream();
                 byte[] image = new byte[fileContent.available()];
                fileContent.read(image);

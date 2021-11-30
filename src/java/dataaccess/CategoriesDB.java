@@ -35,7 +35,7 @@ public class CategoriesDB {
 
         try {
             System.out.println("Category get : "+name);
-            Category category = em.createNamedQuery("Categories.findByCategoryName", Category.class).setParameter("categoryName", name).getSingleResult();
+            Category category = em.createNamedQuery("Category.findByCategoryName", Category.class).setParameter("categoryName", name).getSingleResult();
             return category;
         } finally {
             em.close();
@@ -83,7 +83,7 @@ public class CategoriesDB {
             //System.out.println("userDB update       "+ email+"   "+status+"     "+role+"     "+email+"     "+firstName);
             
              
-             Category category=new Category(getAll().size()+1,categoryName);
+             Category category=new Category(getMaxId()+1,categoryName,true);
              trans.begin();
              em.persist(category);
            
@@ -96,5 +96,15 @@ public class CategoriesDB {
         }
      }
 
+      public Integer getMaxId(){
+         EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
+//        try {
+            
+              Integer item= em.createNamedQuery("Categjory.Category.findMaxId",Integer.class).getSingleResult();
+            return item;
+//        } finally {
+//            em.close();
+//        }
+    }
 }

@@ -25,10 +25,10 @@ public class AccountService {
      
        public User login(String email, String password) {
         UserDB userDB = new UserDB();
-        System.out.println(email+" "+password);
+        //System.out.println(email+" "+password);
         try {
             User user = userDB.get(email);
-            System.out.println(user.getEmail());
+           // System.out.println(user.getEmail());
             
             if (password.equals(user.getPassword()) && user.getActive()) {
                 return user;
@@ -40,7 +40,15 @@ public class AccountService {
     }
 
     public List<User> getAll() throws Exception {
-        return userDB.getAll();
+        List<User> userList = userDB.getAll();
+          for(int i=userList.size()-1;i>=0;i--){
+          if(userList.get(i).getDisplay()==false){
+          userList.remove(i);
+          }
+          }
+          return userList;
+        
+        
     }
 
     public User get(String email) throws Exception {
@@ -52,14 +60,14 @@ public class AccountService {
         userDB.update( email, firstname, lastname, user.getActive(), role, password,active);
     }
 
-    public void insert(String email,String firstname, String lastname, String password) throws Exception {
+    public void insert(String email,String firstname, String lastname, String password,Company company) throws Exception {
         Role role=roleDB.get(REGULAR_USER);
-        userDB.insert( email, password, firstname, lastname,role);
+        userDB.insert( email, password, firstname, lastname,role,company);
     }
     
-     public void insert(String email,String firstname, String lastname, String password, Role role) throws Exception {
+     public void insert(String email,String firstname, String lastname, String password, Role role,Company company) throws Exception {
        
-        userDB.insert( email, password, firstname, lastname,role);
+        userDB.insert( email, password, firstname, lastname,role,company);
     }
 
 
@@ -87,7 +95,7 @@ public class AccountService {
             //System.out.println(user.getEmail());
             user.setPassword(password);
             user.setResetPasswordUuid(null);
-            System.out.println("set new password "+ user.getPassword()+user.getResetPasswordUuid());
+            //System.out.println("set new password "+ user.getPassword()+user.getResetPasswordUuid());
             userDB.update(user);
             return true;
         } catch (Exception ex) {
@@ -119,4 +127,14 @@ public class AccountService {
               userDB.update(user);
               
           }
+            
+          public Company getCompany(String companyName) throws Exception{
+          
+              
+              return companyDB.get(companyName);
+          }
+          
+           public void recovery(User user) throws Exception{
+        userDB.recovery(user);
+       }
 }

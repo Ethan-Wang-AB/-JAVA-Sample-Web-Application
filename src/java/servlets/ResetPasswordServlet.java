@@ -54,6 +54,7 @@ public class ResetPasswordServlet extends HttpServlet {
                 String link = url + "?uuid=" + uuid;
                 String email = request.getParameter("email");
                 User user = accountService.get(email);
+               // System.out.println("reset email: "+email);
                 HashMap<String, String> tags = new HashMap<>();
                 String firstname = user.getFirstName();
                 String lastname = user.getLastName();

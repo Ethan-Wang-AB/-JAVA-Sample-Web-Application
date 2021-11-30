@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "user")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u where u.display=1")
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
     , @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active")
     , @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName")
@@ -38,7 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByResetPasswordUuid", query = "SELECT u FROM User u WHERE u.resetPasswordUuid = :resetPasswordUuid")
     , @NamedQuery(name = "User.findByDirectLoginUuid", query = "SELECT u FROM User u WHERE u.directLoginUuid = :directLoginUuid")
     , @NamedQuery(name = "User.findByAuthenUuid", query = "SELECT u FROM User u WHERE u.authenUuid = :authenUuid")
-    , @NamedQuery(name = "User.findByPhotoPath", query = "SELECT u FROM User u WHERE u.photoPath = :photoPath")})
+    , @NamedQuery(name = "User.findByRegistrationCode", query = "SELECT u FROM User u WHERE u.registrationCode = :registrationCode")
+    , @NamedQuery(name = "User.findByPhotoPath", query = "SELECT u FROM User u WHERE u.photoPath = :photoPath")
+    , @NamedQuery(name = "User.findByDisplay", query = "SELECT u FROM User u WHERE u.display = :display")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,8 +66,13 @@ public class User implements Serializable {
     private String directLoginUuid;
     @Column(name = "authen_uuid")
     private String authenUuid;
+    @Column(name = "registration_code")
+    private String registrationCode;
     @Column(name = "photoPath")
     private String photoPath;
+    @Basic(optional = false)
+    @Column(name = "display")
+    private boolean display;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Item> itemList;
     @JoinColumn(name = "companyID", referencedColumnName = "company_id")
@@ -82,12 +89,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public User(String email, boolean active, String firstName, String lastName, String password) {
+    public User(String email, boolean active, String firstName, String lastName, String password, boolean display) {
         this.email = email;
         this.active = active;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.display = display;
     }
 
     public String getEmail() {
@@ -154,12 +162,28 @@ public class User implements Serializable {
         this.authenUuid = authenUuid;
     }
 
+    public String getRegistrationCode() {
+        return registrationCode;
+    }
+
+    public void setRegistrationCode(String registrationCode) {
+        this.registrationCode = registrationCode;
+    }
+
     public String getPhotoPath() {
         return photoPath;
     }
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    public boolean getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(boolean display) {
+        this.display = display;
     }
 
     @XmlTransient

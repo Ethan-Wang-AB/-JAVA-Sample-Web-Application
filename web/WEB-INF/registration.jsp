@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,6 +24,13 @@
             <input type="text" name="firstname" required><br>
             <label>Last Name</label>
             <input type="text" name="lastname" required>    <br> 
+            <label>Company: </label>
+            <select id="company" name="company" value="${companies}" required>
+                <c:forEach var="item" items="${companies}"> 
+                    <option value="${item.getCompanyName()}">${item.getCompanyName()}</option>
+
+                </c:forEach>
+            </select><br>
             <label>Password</label>
             <input type="password" name="password" required>  <br> 
             <input type="submit" name="submit" value="register">

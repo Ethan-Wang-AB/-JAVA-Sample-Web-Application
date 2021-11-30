@@ -36,7 +36,13 @@ public class LoginServlet extends HttpServlet {
           request.setAttribute("errorExist",true);
             request.setAttribute("error","registration successful");
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-    }else{
+    }else if(request.getParameterMap().containsKey("twoway")){
+      request.setAttribute("error", "Two way authentication activated");
+            request.setAttribute("errorExist", true);
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+
+    }
+       else{
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
        }
 }
@@ -48,6 +54,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         // System.out.println("doPost in login:::  "+username+"   "+password);
         AccountService as = new AccountService();
+        HttpSession session=request.getSession();
         User user = as.login(email, password);
 
         if (user == null) {
@@ -56,9 +63,18 @@ public class LoginServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }
-
-        HttpSession session = request.getSession();
+        String twoway=(String) session.getAttribute("twoway");
+        System.out.println("two way login attribute   "+twoway);
+                
+        if(user!=null && twoway==null && user.getAuthenUuid()!=null && !user.getAuthenUuid().equals(""))
+        {
+            session.setAttribute("emailTwoWay",email);
+            response.sendRedirect("authentication");
+            return;
+        }
+      
         session.setAttribute("email", email);
+        
 
         if (user.getRole().getRoleId()==1) {
         

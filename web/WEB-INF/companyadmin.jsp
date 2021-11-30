@@ -17,7 +17,7 @@
         <h1>Home Inventory!</h1>
         <h2>Menu</h2>
         <a href="inventory">Inventory</a><br>
-            
+           <a href="editprofile">editprofile</a><br>    
         <a href="login?logout">Logout</a><br>
    
         <h2>Manage Users</h2>

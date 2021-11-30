@@ -38,14 +38,15 @@ public class AdminServlet extends HttpServlet {
             HttpSession session = request.getSession();
             String emailAdmin = (String) session.getAttribute("email");
             AccountService accountService = new AccountService();
-
+            List<Role> roles=accountService.getAllRole();
+            request.setAttribute("roles", roles);
             String adminAction = request.getParameter("action");
            List<User> userList = accountService.getAll();
   
-            String email = "";
-            String firstName = "";
-            String lastName = "";
-            String password = "";
+//            String email = "";
+//            String firstName = "";
+//            String lastName = "";
+//            String password = "";
           
              List<Company> companies=accountService.getAllCompany();
            request.setAttribute("companies",companies);
@@ -60,9 +61,9 @@ public class AdminServlet extends HttpServlet {
 
             if (request.getParameter("email") != null) {
                 if (request.getParameter("action").equals("edit")) {
-
-                    email = request.getParameter("email");
-                    User user = accountService.get(email);
+                    session.setAttribute("previousEmail",emailAdmin);
+                    String email = request.getParameter("email");
+                    User user = accountService.get(emailAdmin);
 
                     request.setAttribute("email", user.getEmail());
               
@@ -76,13 +77,16 @@ public class AdminServlet extends HttpServlet {
                     return;
 
                 } else if (request.getParameter("action").equals("delete")) {
-
-                    email = request.getParameter("email");
+                 
+                    String email = request.getParameter("email");
                     if (emailAdmin.equals(email)) {
                         request.setAttribute("error", "You cannot delete yourself");
                         request.setAttribute("errorExist", true);
                     } else {
                         accountService.delete(email);
+                        request.setAttribute("deletion", true);
+                        request.setAttribute("emailDeleted",email);
+                                
                     }
                     userList = accountService.getAll();
                     session.setAttribute("adminAction", "Add User");
@@ -92,7 +96,15 @@ public class AdminServlet extends HttpServlet {
                     return;
                 }
             } else {
-
+                if(request.getParameterMap().containsKey("undoDelete")){
+                String emailDeleted=request.getParameter("emailDeleted");
+                System.out.println("emailEdleted in admin servlet "+ emailDeleted);
+                if(emailDeleted!=null){
+                    User user=accountService.get(emailDeleted.trim());
+                    
+                accountService.recovery(user);
+                }
+                }
                 userList =  accountService.getAll();
 
                 request.setAttribute("userList", userList);
@@ -114,9 +126,12 @@ public class AdminServlet extends HttpServlet {
         String adminAction = (String) session.getAttribute("adminAction");
         System.out.println("adminAction: " + adminAction);
         AccountService accountService = new AccountService();
+       
       
         try {
            List<User> userList = accountService.getAll();
+              List<Role> roles=accountService.getAllRole();
+            request.setAttribute("roles", roles);
              List<Company> companies=accountService.getAllCompany();
              for(int i=0;i<companies.size();i++){
              System.out.println("list company: "+companies.get(i).getCompanyName());
@@ -127,23 +142,27 @@ public class AdminServlet extends HttpServlet {
              
            request.setAttribute("companies",companies);
             request.setAttribute("userList", userList);
-            String username = request.getParameter("username");
+        
             String email = request.getParameter("email");
             String firstname = request.getParameter("firstname");
             String lastname = request.getParameter("lastname");
             String password = request.getParameter("password");
-            String previousUsername = (String) session.getAttribute("previousUsername");
+            String previousEmail = (String) session.getAttribute("previousEmail");
             String status=request.getParameter("status");
+            
             boolean active=true ? status.equals("true")  : false;
 
-            if (username != null && !username.trim().equals("")
-                    && email != null && !email.trim().equals("")
-                    && firstname != null && !firstname.trim().equals("")
+            if (email!= null && !email.trim().equals("")
+                   && firstname != null && !firstname.trim().equals("")
                     && lastname != null && !lastname.trim().equals("") && email.contains("@")) {
                 if (adminAction.equals("Add User")) {
                     String roleName=request.getParameter("roleName");
                     Role role=accountService.getRole(roleName);
-                    accountService.insert( email, firstname, lastname, password,role);
+                    
+                    String companyName=request.getParameter("companyName");
+                            
+                    Company company=accountService.getCompany(companyName);
+                    accountService.insert( email, firstname, lastname, password,role,company);
                     userList =  accountService.getAll();
 
                     request.setAttribute("userList", userList);
@@ -151,7 +170,7 @@ public class AdminServlet extends HttpServlet {
                     return;
                 } else if (adminAction.equals("Edit User")) {
 
-                    if (username.equals(previousUsername)) {
+                    if (email.equals(previousEmail)) {
                            String roleName=request.getParameter("roleName");
                     Role role=accountService.getRole(roleName);
                         accountService.update(email, firstname, lastname,role, password,active);

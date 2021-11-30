@@ -18,6 +18,7 @@
         <h2>Menu</h2>
         <a href="inventory">Inventory</a><br>
         <a href="admin">Admin</a><br>
+           <a href="editprofile">editprofile</a><br>
               <a href="editcategory">Edit Category</a><br>
         <a href="login?logout">Logout</a><br>
    
@@ -28,6 +29,7 @@
                 <th >First Name</th> 
                 <th >Last Name</th> 
                 <th >Company Name</th> 
+                <th> Role</th>
                 <th >Active</th> 
                 <th >Delete</th> 
                 <th >Edit </th> 
@@ -39,6 +41,7 @@
                     <td>${item.getFirstName()}</td>
                     <td>${item.getLastName()}</td>
                     <td>${item.getCompanyID().getCompanyName()}</td>
+                    <td>${item.getRole().getRoleName()}</td>
                     <td>${item.getActive()}</td>
                     <td>
                         <a href="<c:url value='admin'>
@@ -54,6 +57,18 @@
                     </td>
                 </c:forEach>  
         </table>
+        
+        <c:if test="${deletion==true}">
+             <a href="<c:url value='admin'>
+                               <c:param name='undoDelete' value='true' />
+                               <c:param name='emailDeleted' value='${emailDeleted}'/>
+                           </c:url>" >undo deletion</a>
+            
+            
+        </c:if>
+        <p>Get Report for all user summary <a href="report?type=all" target="_blank" rel="noopener noreferrer">get report</a>.</p>
+   <p>Get Report for active non-admin user summary <a href="report?type=activeUser" target="_blank" rel="noopener noreferrer">get report</a>.</p>  
+        
         <h2>${adminAction}</h2>
         <form action="admin" method="post" style="max-width: 500px; background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
 
@@ -78,9 +93,17 @@
 
             <div class="col-auto" style="display:flex;"> 
                 <label style="flex:50%;">Company Name:</label>
-                <select id="categories" name="category">
+                <select id="companies" name="companyName">
                     <c:forEach var="item" items="${companies}"> 
                         <option value="${item.getCompanyName()}">${item.getCompanyName()}</option>
+
+                    </c:forEach>
+                </select>            </div>
+                 <div class="col-auto" style="display:flex;"> 
+                <label style="flex:50%;">Role Position:</label>
+                <select id="roles" name="roleName">
+                    <c:forEach var="item" items="${roles}"> 
+                        <option value="${item.getRoleName()}">${item.getRoleName()}</option>
 
                     </c:forEach>
                 </select>            </div>
