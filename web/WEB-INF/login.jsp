@@ -14,20 +14,31 @@
         <title>Login Page</title>
     </head>
     <body>
-              <h1>Home Inventory</h1>
+
+        <h1>Home Inventory</h1>
+        <div id="google_translate_element"></div>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
         <h2>Login</h2>
         <form action="login" method="post">
             email: <input type="email" name="email"><br>
             password: <input type="password" name="password"><br>
             <input type="submit" value="Sign in">
         </form>
-          <a href="/cprg352-final-project/reset">forget password</a>
-            <a href="/cprg352-final-project/registration">create account</a>
+        <a href="/cprg352-final-project/reset">forget password</a>
+        <a href="/cprg352-final-project/registration">create account</a>
         <c:if test="${errorExist==true}">
 
-          <p>${error}</p>
- 
-           </c:if>
-    
+            <p>${error}</p>
+
+        </c:if>
+
     </body>
 </html>

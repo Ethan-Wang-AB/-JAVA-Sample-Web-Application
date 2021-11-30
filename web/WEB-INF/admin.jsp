@@ -14,14 +14,26 @@
         <title>Admin Page</title>
     </head>
     <body>
+
+
         <h1>Home Inventory!</h1>
+        <div id="google_translate_element"></div>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
         <h2>Menu</h2>
         <a href="inventory">Inventory</a><br>
         <a href="admin">Admin</a><br>
-           <a href="editprofile">editprofile</a><br>
-              <a href="editcategory">Edit Category</a><br>
+        <a href="editprofile">editprofile</a><br>
+        <a href="editcategory">Edit Category</a><br>
         <a href="login?logout">Logout</a><br>
-   
+
         <h2>Manage Users</h2>
         <table >
             <tr>
@@ -57,18 +69,18 @@
                     </td>
                 </c:forEach>  
         </table>
-        
+
         <c:if test="${deletion==true}">
-             <a href="<c:url value='admin'>
-                               <c:param name='undoDelete' value='true' />
-                               <c:param name='emailDeleted' value='${emailDeleted}'/>
-                           </c:url>" >undo deletion</a>
-            
-            
+            <a href="<c:url value='admin'>
+                   <c:param name='undoDelete' value='true' />
+                   <c:param name='emailDeleted' value='${emailDeleted}'/>
+               </c:url>" >undo deletion</a>
+
+
         </c:if>
         <p>Get Report for all user summary <a href="report?type=all" target="_blank" rel="noopener noreferrer">get report</a>.</p>
-   <p>Get Report for active non-admin user summary <a href="report?type=activeUser" target="_blank" rel="noopener noreferrer">get report</a>.</p>  
-        
+        <p>Get Report for active non-admin user summary <a href="report?type=activeUser" target="_blank" rel="noopener noreferrer">get report</a>.</p>  
+
         <h2>${adminAction}</h2>
         <form action="admin" method="post" style="max-width: 500px; background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
 
@@ -99,7 +111,7 @@
 
                     </c:forEach>
                 </select>            </div>
-                 <div class="col-auto" style="display:flex;"> 
+            <div class="col-auto" style="display:flex;"> 
                 <label style="flex:50%;">Role Position:</label>
                 <select id="roles" name="roleName">
                     <c:forEach var="item" items="${roles}"> 

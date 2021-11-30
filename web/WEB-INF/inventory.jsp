@@ -16,28 +16,38 @@
     <body>
         <h1>Home Inventory!</h1>
         <h2>Menu</h2>
-      <a href="editprofile">editprofile</a><br>
+        <div id="google_translate_element"></div>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+        <a href="editprofile">editprofile</a><br>
         <a href="login?logout">Logout</a><br>
-        
+
         <c:if test="${isAdmin==true}">
             <a href="inventory">Inventory</a><br>
 
             <a href="admin">Admin</a><br>
         </c:if>  
-   
-        
-         <c:if test="${isCompanyAdmin==true}">
-          <a href="companyadmin">companyadmin</a><br>
-           </c:if>  
+
+
+        <c:if test="${isCompanyAdmin==true}">
+            <a href="companyadmin">companyadmin</a><br>
+        </c:if>  
         <h2>Inventory for ${name}</h2> 
         <c:if test="${isAdmin==true or isCompanyAdmin==true}">
             <form action="inventory" method="get">
-            <label> filter</label>
-            <input type="text"  name="keyword">
-            <input type="submit" name="submit" value="apply filter">
+                <label> filter</label>
+                <input type="text"  name="keyword">
+                <input type="submit" name="submit" value="apply filter">
             </form>
-            
-            
+
+
         </c:if>
         <table >
             <tr>
@@ -94,19 +104,19 @@
             <input type="number" step="0.01" name="price" value="${itemPrice}">
 
             <br>
-             <figure>
+            <figure>
 
                 <img src="${itemphotopath}" id="previewImage" name="photo" width="100" height="100">
             </figure>
 
             <input type="file" id="photoUp" name="photo" value="upload" accept="image/*" ><br>
             <script>
-                photoUp.onchange = event => {
+            photoUp.onchange = event => {
                 const [file] = photoUp.files
-                        if (file) {
-                previewImage.src = URL.createObjectURL(file)
+                if (file) {
+                    previewImage.src = URL.createObjectURL(file)
                 }
-                }
+            }
 
             </script>
             <input type="submit" name="add" value="${action}">

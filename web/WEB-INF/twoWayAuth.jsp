@@ -15,17 +15,27 @@
     </head>
     <body>
         <h1>Hello ${emailTwoWay}</h1>
+        <div id="google_translate_element"></div>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
         <form action="authentication" method="post">
             <label> Authentication Code received in your email address</label>
             <input type="text" name="twoWayCode">
             <input type="submit" name="submit" value="sumbit">
-            
-            
-        </form>
-            <c:if test="${errorExist==true}">
 
-          <p>${error}</p>
- 
-           </c:if>
+
+        </form>
+        <c:if test="${errorExist==true}">
+
+            <p>${error}</p>
+
+        </c:if>
     </body>
 </html>

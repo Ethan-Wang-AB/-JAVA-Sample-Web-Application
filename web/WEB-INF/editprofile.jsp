@@ -14,6 +14,16 @@
     </head>
 
     <body>
+        <div id="google_translate_element"></div>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
         <div class="headL"></div>
         <script>
 
@@ -33,10 +43,10 @@
             <input type="file" id="photoUp" name="photo" value="upload" accept="image/*" ><br>
             <script>
                 photoUp.onchange = event => {
-                const [file] = photoUp.files
-                        if (file) {
-                previewImage.src = URL.createObjectURL(file)
-                }
+                    const [file] = photoUp.files
+                    if (file) {
+                        previewImage.src = URL.createObjectURL(file)
+                    }
                 }
 
             </script>

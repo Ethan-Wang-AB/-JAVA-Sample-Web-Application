@@ -16,6 +16,16 @@
     <body>
 
         <a href="login?logout">Back to Login Page</a><br>
+        <div id="google_translate_element"></div>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
         <form action="registration" method="post">
             <label>Email </label>
             <input type="email" name="email" required><br>

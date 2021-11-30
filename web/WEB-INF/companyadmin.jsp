@@ -14,12 +14,22 @@
         <title>Admin Page</title>
     </head>
     <body>
-        <h1>Home Inventory!</h1>
+        <h1>Home Inventory--${companyName}!</h1>
+        <div id="google_translate_element"></div>
+
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
         <h2>Menu</h2>
         <a href="inventory">Inventory</a><br>
-           <a href="editprofile">editprofile</a><br>    
+        <a href="editprofile">editprofile</a><br>    
         <a href="login?logout">Logout</a><br>
-   
+
         <h2>Manage Users</h2>
         <table >
             <tr>
@@ -78,7 +88,7 @@
             <div class="col-auto" style="display:flex;"> 
                 <label style="flex:50%;">Company Name:</label>
                 <label name="companyName">${companyName}</label> 
-            
+
             </div>
             <div class="col-auto" style="display:flex;"> 
                 <label style="flex:50%;" >Status:</label>
