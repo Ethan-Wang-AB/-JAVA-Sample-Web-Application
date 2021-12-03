@@ -32,8 +32,9 @@
             password: <input type="password" name="password"><br>
             <input type="submit" value="Sign in">
         </form>
-        <a href="/cprg352-final-project/reset">forget password</a>
-        <a href="/cprg352-final-project/registration">create account</a>
+     
+        <a href="registration">create account</a>
+           <a href="reset">forget password</a>
         <c:if test="${errorExist==true}">
 
             <p>${error}</p>
