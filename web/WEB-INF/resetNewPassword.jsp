@@ -10,9 +10,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Reset password</title>
+                  <link type="text/css" rel="stylesheet" href="css/reset.css" charset="utf-8">
+
     </head>
     <body>
-        <h1>Enter a new password</h1>
+        
+        <form action="reset" method="post">
+
+          <div class="container">  
+            
+            <h1>Enter a new password</h1>
         <div id="google_translate_element"></div>
 
         <script type="text/javascript">
@@ -23,12 +30,10 @@
 
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-        <form action="reset" method="post">
-
             <input type="hidden" name="uuid" value="${uuid}">
             <input type="password" name="password" >
-            <input type="submit" name="submit" value="submit">
-
+            <button class="registerbtn" type="submit" name="submit" value="submit"> Reset Password</button>>
+            </div>
         </form>
     </body>
 </html>

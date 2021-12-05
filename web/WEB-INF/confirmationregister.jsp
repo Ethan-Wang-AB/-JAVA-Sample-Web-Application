@@ -12,9 +12,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Confirmation Register</title>
+                  <link type="text/css" rel="stylesheet" href="css/register.css" charset="utf-8">
+
     </head>
     <body>
-        <h1>Hello ${firstname} ${lastname}</h1>
+              <div class="container">
+        <form action="registration" method="post">
+            
+     
+             <h1>Hello ${firstname} ${lastname}</h1>
         <div id="google_translate_element"></div>
 
         <script type="text/javascript">
@@ -24,12 +30,15 @@
         </script>
 
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-        <form action="registration" method="post">
+        <h3>Please provide your confirmation code to finish registration</h3>
             <label> Confirmation Code: </label>
             <input type="number" name="code" >
-            <input type="submit" name="submit" value="submit">
+            <button type="submit" name="submit" value="submit">Register</button>
+            
+            
+         
         </form>
-
+                     <a href="login">Back to Login Page</a><br>
+   </div>
     </body>
 </html>

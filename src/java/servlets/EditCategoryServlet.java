@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.Category;
+import models.User;
+import services.AccountService;
 import services.CategoryService;
 
 /**
@@ -33,6 +35,11 @@ public class EditCategoryServlet extends HttpServlet {
         try {
             HttpSession session=request.getSession();
             String email=(String) session.getAttribute("email");
+            AccountService accountService=new AccountService();
+            User user=accountService.get(email);
+            if(user.getRole().getRoleId()==1){
+            request.setAttribute("isAdmin",true);
+            }
             String action=request.getParameter("action");
             String categoryIdS=request.getParameter("categoryId");
             CategoryService categoryService=new CategoryService();

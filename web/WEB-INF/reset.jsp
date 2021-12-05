@@ -10,26 +10,33 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Reset Password</title>
+        <link type="text/css" rel="stylesheet" href="css/reset.css" charset="utf-8">
+
     </head>
     <body>
-        <h1>Reset Password</h1>
-        <div id="google_translate_element"></div>
+        <div class="container">
+            <form action="reset" method="post">
 
-        <script type="text/javascript">
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-            }
-        </script>
 
-        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                <h1>Reset Password</h1>
+                <div id="google_translate_element"></div>
 
-        <h3>Please Enter your email address to reset your password</h3>
-        <form action="reset" method="post">
-            <label Address</label>
-            <input type="email" name="email" >
-            <input type="submit" name="submit" value="submit">
+                <script type="text/javascript">
+                    function googleTranslateElementInit() {
+                        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                    }
+                </script>
 
-        </form>
+                <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+                <h3>Please Enter your email address to reset your password</h3>
+                <label Address</label>
+                <input type="email" name="email" >
+                <button class="registerbtn" type="submit" name="submit" value="submit">Send Confirmation Email</button>
+
+            </form>
+            <a href="login">Back to Login Page</a><br>
+
+        </div>
     </body>
 </html>

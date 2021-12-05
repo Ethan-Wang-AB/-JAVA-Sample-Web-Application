@@ -11,6 +11,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Category</title>
+                <link type="text/css" rel="stylesheet" href="css/editcategory.css" charset="utf-8">
+
     </head>
     <body>
         <h1>Edit Category</h1>
@@ -24,11 +26,31 @@
 
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-        <a href="inventory">Inventory</a><br>
-        <a href="admin">Admin</a><br>
-        <a href="login?logout">Logout</a><br>
+     <div class="topnav">
+            <c:if test="${isAdmin==true}">
+                <a  href="inventory">Inventory</a>
+
+                <a href="admin">Admin</a>
+            </c:if>  
+
+            <a href="editprofile">Edit Profile</a>
+            <a class="active" href="editcategory">Edit Category</a>
+       
+            <div class="dropdown">
+                <button class="dropbtn">Reports 
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="report?type=all" target="_blank" rel="noopener noreferrer">All Users Summary</a>
+                    <a href="report?type=activeUser" target="_blank" rel="noopener noreferrer">Active Non-admin Summary</a>
+
+                </div>
+                     <a href="login?logout">Logout</a>
+            </div>  
+
+        </div>
         <form action="editcategory" method="post">
-            <table>
+            <table id="customers">
                 <th>Number</th>
                 <th>Category</th>
                 <th>edit</th>
@@ -43,10 +65,10 @@
                     </tr>
                 </c:forEach>
             </table>
-
-            <a href="editcategory?action=add">add category</a>    
-
-            <h2>${action}</h2>
+    <c:if test="${action=='edit'}">
+       <a class="two" href="editcategory?action=add">Add category</a>  
+    </c:if>
+            <h2>${action} Category</h2>
 
             <input type="hidden" name="action" value="${action}">
             <c:if test="${action=='edit'}">
@@ -56,7 +78,7 @@
             <br>
             <label>Category Name:</label>
             <input type="text" name="categoryName" value="${categoryName}">
-            <input type="submit" name="submit" value="submit">
+            <input type="submit" name="submit" value="${action}">
 
 
 

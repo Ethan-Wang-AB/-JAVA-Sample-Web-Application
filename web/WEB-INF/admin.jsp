@@ -12,13 +12,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Admin Page</title>
+        <link type="text/css" rel="stylesheet" href="css/admin.css" charset="utf-8">
+
     </head>
     <body>
-
-
-        <h1>Home Inventory!</h1>
-        <div id="google_translate_element"></div>
-
+     
+        <h1>Home Inventory! <div style="float: right"id="google_translate_element"></div></h1>
+       
         <script type="text/javascript">
             function googleTranslateElementInit() {
                 new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
@@ -26,21 +26,34 @@
         </script>
 
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <div class="topnav">
+            <a class="active" href="admin">Admin</a>
+            <a href="inventory">Inventory</a>
 
-        <h2>Menu</h2>
-        <a href="inventory">Inventory</a><br>
-        <a href="admin">Admin</a><br>
-        <a href="editprofile">editprofile</a><br>
-        <a href="editcategory">Edit Category</a><br>
-        <a href="login?logout">Logout</a><br>
+            <a href="editprofile">editprofile</a>
+            <a href="editcategory">Edit Category</a>
+            <a href="login?logout">Logout</a>
+            <div class="dropdown">
+                <button class="dropbtn">Reports 
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="report?type=all" target="_blank" rel="noopener noreferrer">All Users Summary</a>
+                    <a href="report?type=activeUser" target="_blank" rel="noopener noreferrer">Active Non-admin Summary</a>
+
+                </div>
+            </div>               
+
+        </div>
+        <hr class="rounded">
 
         <h2>Manage Users</h2>
-        <table >
+        <table id="customers">
             <tr>
                 <th >Email</th> 
                 <th >First Name</th> 
                 <th >Last Name</th> 
-                <th >Company Name</th> 
+                <th >Company</th> 
                 <th> Role</th>
                 <th >Active</th> 
                 <th >Delete</th> 
@@ -78,110 +91,75 @@
 
 
         </c:if>
-        <p>Get Report for all user summary <a href="report?type=all" target="_blank" rel="noopener noreferrer">get report</a>.</p>
-        <p>Get Report for active non-admin user summary <a href="report?type=activeUser" target="_blank" rel="noopener noreferrer">get report</a>.</p>  
+<hr class="rounded">
 
-        <h2>${adminAction}</h2>
-        <form action="admin" method="post" style="max-width: 500px; background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
+        <div class="container">
+            <h2>${adminAction}</h2>
+            <form action="admin" method="post" >
 
 
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">email</label>
-                <input style="flex:50%;" type="email" name="email" placeholder="email" value="${email}"  <c:if test="${isEdit==true}">disabled</c:if>>
+                <div > 
+                    <label >Email</label>
+                    <input  type="email" name="email" placeholder="email" value="${email}"  <c:if test="${isEdit==true}">disabled</c:if>>
+                    </div>
+                    <!--            <div class="col-auto" style="display:flex;"> 
+                                    <label style="flex:50%;" >Email:</label>
+                                    <input style="flex:50%;" type="email" name="email" placeholder="email" value="${email}">
+                                </div>-->
+                <div > 
+                    <label  >First Name:</label>
+                    <input   type="text" name="firstname" placeholder="first name" value="${fistName}">
                 </div>
-                <!--            <div class="col-auto" style="display:flex;"> 
-                                <label style="flex:50%;" >Email:</label>
-                                <input style="flex:50%;" type="email" name="email" placeholder="email" value="${email}">
-                            </div>-->
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;" >First Name:</label>
-                <input  style="flex:50%;" type="text" name="firstname" placeholder="first name" value="${fistName}">
-            </div>
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">Last Name:</label>
-                <input style="flex:50%;" type="text" name="lastname" placeholder="last name" value="${lastName}">
-            </div>
+                <div > 
+                    <label >Last Name:</label>
+                    <input  type="text" name="lastname" placeholder="last name" value="${lastName}">
+                </div>
 
 
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">Company Name:</label>
-                <select id="companies" name="companyName">
-                    <c:forEach var="item" items="${companies}"> 
-                        <option value="${item.getCompanyName()}">${item.getCompanyName()}</option>
+                <div class="select"> 
+                    <label class="selectLabel">Company Name:</label>
+                    <select id="companies" name="companyName">
+                        <c:forEach var="item" items="${companies}"> 
+                            <option value="${item.getCompanyName()}">${item.getCompanyName()}</option>
 
-                    </c:forEach>
-                </select>            </div>
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">Role Position:</label>
-                <select id="roles" name="roleName">
-                    <c:forEach var="item" items="${roles}"> 
-                        <option value="${item.getRoleName()}">${item.getRoleName()}</option>
+                        </c:forEach>
+                    </select>            </div>
+                <div class="select"> 
+                    <label class="selectLabel">Role Position:</label>
+                    <select id="roles" name="roleName">
+                        <c:forEach var="item" items="${roles}"> 
+                            <option value="${item.getRoleName()}">${item.getRoleName()}</option>
 
-                    </c:forEach>
-                </select>            </div>
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;" >Status:</label>
-                <select id="status" name="status">
+                        </c:forEach>
+                    </select>            </div>
+                <div class="select"> 
 
-                    <option value="true">Active</option>
-                    <option value="false">Inactive</option>
+                    <label class="selectLabel" >User Status:</label>
+                    <select id="status" name="status">
 
-                </select>            </div>
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
 
-
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">Password:</label>
-                <input style="flex:50%;" type="password" name="password" placeholder="password" value="${password}">
-            </div>
+                    </select>            </div>
 
 
-            <div class="col-auto" style="display:flex;"> 
-                <input class="button" type="submit" value="save">
-                <input class="button" type="reset" value="Cancel">
-            </div>
-        </form>
+                <div > 
+                    <label >Password:</label>
+                    <input  type="password" name="password" placeholder="password" value="${password}">
+                </div>
 
-        <!--        <h2>Add User</h2>
-        
-                <form action="users" method="post"  style=" background-color:lightgrey;  border: groove;    border-radius: 15px; padding: 15px 32px;  text-decoration: none;  margin: 5px;">
-                    <div class="col-auto"> 
-                        <input type="hidden" name="action" value="new">
-                    </div>
-                    <div class="col-auto"> 
-                        <input type="email" name="emailN" placeholder="email">
-                    </div>
-                    <div class="col-auto"> 
-                        <input type="text" name="firstName" placeholder="first name">
-                    </div>
-                    <div class="col-auto"> 
-                        <input type="text" name="lastName" placeholder="last name">
-                    </div>
-                    <div class="col-auto"> 
-                        <input type="text" name="password" placeholder="password">
-                    </div>
-                    <div class="col-auto"> 
-                        <select name="status" id="status" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option value="active">active</option>
-                            <option value="inactive">inactive</option>
-        
-                        </select>
-                    </div>
-                    <div class="col-auto"> 
-                        <select name="role" id="role">
-                            <option value="system admin">system admin</option>
-                            <option value="regular user">regular user</option>
-                            <option value="company admin">company admin</option>
-        
-                        </select>
-                    </div>
-                    <div class="col-auto"> 
-                        <input class="button" type="submit" value="save">
-                    </div>
-        
-                </form>-->
 
+
+                <button class="registerbtn" type="submit" value="save">${adminAction}</button>
+                <button style="background-color: lightgray"class="registerbtn" type="reset" value="Cancel">cancel</button>
+
+            </form>
+        </div>
         <c:if test="${errorExist==true}">
             <p style="text-align: center;">Error: ${error}</p>
         </c:if>
     </body>
 </html>
+
+
+

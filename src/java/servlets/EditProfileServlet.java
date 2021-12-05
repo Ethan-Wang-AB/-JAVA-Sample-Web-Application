@@ -40,8 +40,10 @@ public class EditProfileServlet extends HttpServlet {
             AccountService accountService = new AccountService();
             HttpSession session = request.getSession();
             String email = (String) session.getAttribute("email");
-            
-            
+           User user= accountService.get(email);
+            if(user.getRole().getRoleId()==1){
+            request.setAttribute("isAdmin", true);
+            }
             if(request.getParameterMap().containsKey("twowayEnable")){
      
                String emailLogin=email;
@@ -49,7 +51,7 @@ public class EditProfileServlet extends HttpServlet {
             session.setAttribute("emailTwoWay", emailLogin);
            System.out.println("enable 2Way    "+emailLogin);
            
-            User user=accountService.get(email);
+            user=accountService.get(email);
             int twoWay=(int) (Math.random()*10000/1);
             user.setAuthenUuid(twoWay+"");
             accountService.update(user);
@@ -64,7 +66,7 @@ public class EditProfileServlet extends HttpServlet {
             
             // String img=request.getParame
             //System.out.println("edit profile  " + email);
-            User user = accountService.get(email);
+         user = accountService.get(email);
               //    System.out.println("edit profile get name " + user);
             request.setAttribute("user", user);
 //            if(user.getPhotoPath()!=null){

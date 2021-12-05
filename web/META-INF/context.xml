@@ -4,7 +4,7 @@
         name="jdbc/inventorydb"   
         url="jdbc:mysql://localhost:3306/inventorydb"
         username="root"
-        password="Sait12345." 
+        password="password" 
         driverClassName="com.mysql.jdbc.Driver" 
         maxActive="100" 
         maxIdle="30" 

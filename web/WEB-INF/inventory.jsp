@@ -12,11 +12,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Inventory Page</title>
+        <link type="text/css" rel="stylesheet" href="css/inventory.css" charset="utf-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     </head>
     <body>
-        <h1>Home Inventory!</h1>
-        <h2>Menu</h2>
-        <div id="google_translate_element"></div>
+        <h1>Home Inventory! <div style="float: right"id="google_translate_element"></div></h1>
 
         <script type="text/javascript">
             function googleTranslateElementInit() {
@@ -25,31 +26,60 @@
         </script>
 
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+         <hr>
+        <div class="topnav">
+            <c:if test="${isAdmin==true}">
+                <a class="active" href="inventory">Inventory</a>
 
-        <a href="editprofile">editprofile</a><br>
-        <a href="login?logout">Logout</a><br>
+                <a href="admin">Admin</a>
+                  <div class="dropdown">
+                <button class="dropbtn">Reports 
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="report?type=all" target="_blank" rel="noopener noreferrer">All Users Summary</a>
+                    <a href="report?type=activeUser" target="_blank" rel="noopener noreferrer">Active Non-admin Summary</a>
 
-        <c:if test="${isAdmin==true}">
-            <a href="inventory">Inventory</a><br>
+                </div>
+            </div>  
+            </c:if>  
 
-            <a href="admin">Admin</a><br>
-        </c:if>  
+            <a href="editprofile">Edit Profile</a>
+            <a href="editcategory">Edit Category</a>
+            <a href="login?logout">Logout</a>
+          
+
+        </div>
 
 
         <c:if test="${isCompanyAdmin==true}">
             <a href="companyadmin">companyadmin</a><br>
         </c:if>  
+          <hr class="rounded">
         <h2>Inventory for ${name}</h2> 
-        <c:if test="${isAdmin==true or isCompanyAdmin==true}">
-            <form action="inventory" method="get">
-                <label> filter</label>
-                <input type="text"  name="keyword">
-                <input type="submit" name="submit" value="apply filter">
-            </form>
+            
+        <div class="wrap">
+            <div class="search">
+                <c:if test="${isAdmin==true or isCompanyAdmin==true}">
+                    <form action="inventory" method="get">
+                        <input  id="searchTerm" type="text"  placeholder="Search.." name="keyword">
+                        <button id="searchButton" type="submit" placeholder="Search.." name="search">Search</button>
+                    </form>
+                </c:if>
+
+            </div>
+        </div>
 
 
-        </c:if>
-        <table >
+
+
+        <div class="search-container" > 
+
+
+
+
+        </div>
+        <table id="customers">
             <tr>
                 <th >Username</th> 
                 <th >Category</th> 
@@ -80,46 +110,54 @@
             <tr>
                 <th >Total</th> 
                 <th ></th> 
+                <th ></th> 
                 <th >${total}</th> 
-                <th > </th>  </tr>
+                <th > </th>  
+                <th ></th> </tr>
         </table>
-        <h2>${action}</h2>
+              <hr class="rounded">    
+        <h3>${action}</h3>
+      
         <c:if test="${deletion==true}">
             <a href="inventory?undoDelete&itemId=${itemId}">undo deletion</a>
         </c:if>
         <form method="post" action="inventory" enctype="multipart/form-data">
-            <input type="hidden" name="itemId" value="${itemId}">
-            <label>Category</label>
-            <select id="categories" name="category" value="${categoryName}">
-                <c:forEach var="item" items="${categories}"> 
-                    <option value="${item.getCategoryName()}">${item.getCategoryName()}</option>
+            <div class="container">           <input type="hidden" name="itemId" value="${itemId}">
 
-                </c:forEach>
-            </select>
-            <br>
-            <label>Item Name</label>
-            <input type="text" name="itemName" value="${itemName}">
-            <br>
-            <label>Item Price</label>
-            <input type="number" step="0.01" name="price" value="${itemPrice}">
+                <br>
+                <label>Item Name</label>
+                <input type="text" name="itemName" value="${itemName}">
+                <br>
+                   <label>Category</label>
+                <select id="categories" name="category" value="${categoryName}">
+                    <c:forEach var="item" items="${categories}"> 
+                        <option value="${item.getCategoryName()}">${item.getCategoryName()}</option>
 
-            <br>
-            <figure>
+                    </c:forEach>
+                </select><br>
+                <label>Item Price</label>
+                <input type="number" step="0.01" name="price" value="${itemPrice}">
+             
+                <br>
+                <label>Item Image</label>
+                <figure>
 
-                <img src="${itemphotopath}" id="previewImage" name="photo" width="100" height="100">
-            </figure>
-
-            <input type="file" id="photoUp" name="photo" value="upload" accept="image/*" ><br>
-            <script>
-            photoUp.onchange = event => {
-                const [file] = photoUp.files
-                if (file) {
-                    previewImage.src = URL.createObjectURL(file)
+                    <img src="${itemphotopath}" id="previewImage" name="photo" width="100" height="100">
+                </figure>
+           
+                <input type="file" id="photoUp" name="photo" value="upload" accept="image/*" ><br>
+                <script>
+                photoUp.onchange = event => {
+                    const [file] = photoUp.files
+                    if (file) {
+                        previewImage.src = URL.createObjectURL(file)
+                    }
                 }
-            }
 
-            </script>
-            <input type="submit" name="add" value="${action}">
+                </script>
+                <button class="registerbtn" type="submit" name="add" value="${action}">${action}</button>
+            </div>
+
         </form>
         <c:if test="${errorExist==true}">
 
