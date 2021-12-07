@@ -177,7 +177,7 @@ public void recovery(User user) throws Exception {
     }
 
   
-  public void insert(String email,String password,String firstname,String lastname,Role role,Company company) throws Exception {
+  public void insert(String email,String password,String firstname,String lastname,Role role,Company company, String salt) throws Exception {
                      EntityManager em = DBUtil.getEmFactory().createEntityManager();
              EntityTransaction trans=em.getTransaction();
         try {
@@ -189,7 +189,7 @@ public void recovery(User user) throws Exception {
             user.setRole(role);
             user.setCompanyID(company);
             user.setActive(true);
-            
+            user.setSalt(salt);
             
              trans.begin();
              em.persist(user);

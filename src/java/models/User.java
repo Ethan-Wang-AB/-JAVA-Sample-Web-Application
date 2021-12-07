@@ -29,12 +29,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "user")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u where u.display=1")
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
     , @NamedQuery(name = "User.findByActive", query = "SELECT u FROM User u WHERE u.active = :active")
     , @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName")
     , @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
+    , @NamedQuery(name = "User.findBySalt", query = "SELECT u FROM User u WHERE u.salt = :salt")
     , @NamedQuery(name = "User.findByResetPasswordUuid", query = "SELECT u FROM User u WHERE u.resetPasswordUuid = :resetPasswordUuid")
     , @NamedQuery(name = "User.findByDirectLoginUuid", query = "SELECT u FROM User u WHERE u.directLoginUuid = :directLoginUuid")
     , @NamedQuery(name = "User.findByAuthenUuid", query = "SELECT u FROM User u WHERE u.authenUuid = :authenUuid")
@@ -60,6 +61,8 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
+    @Column(name = "salt")
+    private String salt;
     @Column(name = "reset_password_uuid")
     private String resetPasswordUuid;
     @Column(name = "direct_login_uuid")
@@ -136,6 +139,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getResetPasswordUuid() {

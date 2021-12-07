@@ -12,6 +12,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Admin Page</title>
+                <link type="text/css" rel="stylesheet" href="css/companyadmin.css" charset="utf-8">
+
     </head>
     <body>
         <h1>Home Inventory--${companyName}!</h1>
@@ -26,12 +28,19 @@
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
         <h2>Menu</h2>
-        <a href="inventory">Inventory</a><br>
-        <a href="editprofile">editprofile</a><br>    
-        <a href="login?logout">Logout</a><br>
+       <div class="topnav">
+            <a class="active" href="companyadmin">Admin</a>
+            <a href="inventory">Inventory</a>
+
+            <a href="editprofile">editprofile</a>
+          
+            <a href="login?logout">Logout</a>
+           
+
+        </div>
 
         <h2>Manage Users</h2>
-        <table >
+        <table  class="${company}" id="customers" >
             <tr>
                 <th >Email</th> 
                 <th >First Name</th> 
@@ -67,31 +76,31 @@
         <form action="admin" method="post" style="max-width: 500px; background-color:dimgray;  border: groove;   border-radius: 15px; border-color:darkkhaki;  padding: 15px 32px;  text-decoration: none;  margin: 5px;">
 
 
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">email</label>
-                <input style="flex:50%;" type="email" name="email" placeholder="email" value="${email}"  <c:if test="${isEdit==true}">disabled</c:if>>
+            <div > 
+                <label>email</label>
+                <input  type="email" name="email" placeholder="email" value="${email}"  <c:if test="${isEdit==true}">disabled</c:if>>
                 </div>
                 <!--            <div class="col-auto" style="display:flex;"> 
                                 <label style="flex:50%;" >Email:</label>
                                 <input style="flex:50%;" type="email" name="email" placeholder="email" value="${email}">
                             </div>-->
-            <div class="col-auto" style="display:flex;"> 
+            <div > 
                 <label style="flex:50%;" >First Name:</label>
                 <input  style="flex:50%;" type="text" name="firstname" placeholder="first name" value="${fistName}">
             </div>
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">Last Name:</label>
-                <input style="flex:50%;" type="text" name="lastname" placeholder="last name" value="${lastName}">
+            <div > 
+                <label>Last Name:</label>
+                <input  type="text" name="lastname" placeholder="last name" value="${lastName}">
             </div>
 
 
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">Company Name:</label>
-                <label name="companyName">${companyName}</label> 
+            <div > 
+                <label >Company Name:</label>
+                <label >${companyName}</label> 
 
             </div>
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;" >Status:</label>
+            <div class="select"> 
+                <label >Status:</label>
                 <select id="status" name="status">
 
                     <option value="true">Active</option>
@@ -100,15 +109,15 @@
                 </select>            </div>
 
 
-            <div class="col-auto" style="display:flex;"> 
-                <label style="flex:50%;">Password:</label>
-                <input style="flex:50%;" type="password" name="password" placeholder="password" value="${password}">
+            <div class="select"> 
+                <label >Password:</label>
+                <input type="password" name="password" placeholder="password" value="${password}">
             </div>
 
 
-            <div class="col-auto" style="display:flex;"> 
-                <input class="button" type="submit" value="save">
-                <input class="button" type="reset" value="Cancel">
+            <div> 
+                <button class="registerbtn" type="submit" value="save">Save</button>
+                <button style="background-color: lightgray"class="registerbtn" type="reset" value="Cancel">cancel</button>
             </div>
         </form>
 

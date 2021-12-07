@@ -60,13 +60,13 @@ public class ItemsDB {
     public Integer getMaxId(){
          EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
-//        try {
+        try {
             
-              Integer item= em.createNamedQuery("Item.Item.findMaxId",Integer.class).getSingleResult();
+              Integer item= em.createNamedQuery("Item.findMaxId",Integer.class).getSingleResult();
             return item;
-//        } finally {
-//            em.close();
-//        }
+        } finally {
+            em.close();
+        }
     }
     
     

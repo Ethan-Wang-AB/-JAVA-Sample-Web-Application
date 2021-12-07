@@ -133,8 +133,10 @@ public class EditProfileServlet extends HttpServlet {
                 String firstname = request.getParameter("firstname");
                 String lastname = request.getParameter("lastname");
                 String password = request.getParameter("password");
-
-                accountService.update(email, firstname, lastname, user.getRole(), password, user.getActive());
+                 user=accountService.get(email);
+                user.setFirstName(firstname);
+                user.setLastName(lastname);
+                accountService.update(user);
 
             }
 

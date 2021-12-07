@@ -27,12 +27,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "item")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i where i.display=1")
+    @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i")
     , @NamedQuery(name = "Item.findByItemId", query = "SELECT i FROM Item i WHERE i.itemId = :itemId")
     , @NamedQuery(name = "Item.findByItemName", query = "SELECT i FROM Item i WHERE i.itemName = :itemName")
     , @NamedQuery(name = "Item.findByPrice", query = "SELECT i FROM Item i WHERE i.price = :price")
     , @NamedQuery(name = "Item.findByPhotoPath", query = "SELECT i FROM Item i WHERE i.photoPath = :photoPath")
-    , @NamedQuery(name = "Item.findMaxId", query = "SELECT max(i.itemId) FROM Item i")    
+         , @NamedQuery(name = "Item.findMaxId", query = "SELECT max(i.itemId) FROM Item i")
     , @NamedQuery(name = "Item.findByDisplay", query = "SELECT i FROM Item i WHERE i.display = :display")})
 public class Item implements Serializable {
 

@@ -29,9 +29,23 @@ public class AccountService {
         try {
             User user = userDB.get(email);
            // System.out.println(user.getEmail());
-            
-            if (password.equals(user.getPassword()) && user.getActive()) {
+            System.out.println(user.getSalt());
+            if (user.getSalt()==null  &&password.equals(user.getPassword()) && user.getActive()) {
+                
+                user.setSalt(PasswordUtil.getSalt());
+                String newPassword=PasswordUtil.hashAndSaltPassword(password,user.getSalt());
+                user.setPassword(newPassword);
+                update(user);
                 return user;
+            }
+            else{
+            String code=PasswordUtil.hashAndSaltPassword(password, user.getSalt());
+            System.out.println(user.getPassword());
+            System.out.println(code);
+            if(user.getPassword().equals(code)){
+            return user;
+            }
+                       
             }
         } catch (Exception e) {
         }
@@ -55,19 +69,22 @@ public class AccountService {
         return userDB.get(email);
     }
 
-    public void update( String email, String firstname, String lastname, Role role, String password, boolean active) throws Exception {
-        User user=get(email);
-        userDB.update( email, firstname, lastname, user.getActive(), role, password,active);
-    }
+//    public void update( String email, String firstname, String lastname, Role role, String password, boolean active) throws Exception {
+//        User user=get(email);
+//        userDB.update( email, firstname, lastname, user.getActive(), role, password,active);
+//    }
 
     public void insert(String email,String firstname, String lastname, String password,Company company) throws Exception {
         Role role=roleDB.get(REGULAR_USER);
-        userDB.insert( email, password, firstname, lastname,role,company);
+        String salt=PasswordUtil.getSalt();
+        String newPassword=PasswordUtil.hashAndSaltPassword(password, salt);
+        userDB.insert( email, newPassword, firstname, lastname,role,company,salt);
     }
     
      public void insert(String email,String firstname, String lastname, String password, Role role,Company company) throws Exception {
-       
-        userDB.insert( email, password, firstname, lastname,role,company);
+           String salt=PasswordUtil.getSalt();
+           String newPassword=PasswordUtil.hashAndSaltPassword(password, salt);
+        userDB.insert( email, newPassword, firstname, lastname,role,company,salt);
     }
 
 

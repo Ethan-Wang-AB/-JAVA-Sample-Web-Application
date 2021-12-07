@@ -33,65 +33,6 @@ body {
   width: 100%;
 }
 
-.SAIT{
-    background-color: lightcoral;
-    
-}
-
-.blink{ 
-        font-size: 46px; 
-        color:darkorange; 
-        margin: 5px;
-        animation: changeshadow 1s  ease-in  infinite ;
-         -webkit-animation: changeshadow 1s linear infinite;
-        -moz-animation: changeshadow 1s linear infinite;
-        -ms-animation: changeshadow 1s linear infinite;
-        -o-animation: changeshadow 1s linear infinite;
-    }  
-    @keyframes changeshadow {  
-        0%{ text-shadow: 0 0 4px blue}  
-        50%{ text-shadow: 0 0 10px blue}  
-        100%{ text-shadow: 0 0 4px blue}  
-    }
-
-    @-webkit-keyframes changeshadow {
-      0%{ text-shadow: 0 0 2px blue}  
-          50%{ text-shadow: 0 0 10px blue}  
-          100%{ text-shadow: 0 0 4px blue}  
-    }
-    @-moz-keyframes changeshadow {
-        0%{ text-shadow: 0 0 2px blue}  
-            50%{ text-shadow: 0 0 10px blue}  
-            100%{ text-shadow: 0 0 4px blue}  
-    }
-    @-ms-keyframes changeshadow {
-        0%{ text-shadow: 0 0 2px #4cc134}  
-            50%{ text-shadow: 0 0 10px blue}  
-            100%{ text-shadow: 0 0 4px blue}  
-    }
-    @-o-keyframes changeshadow {
-        0%{ text-shadow: 0 0 2px blue}  
-            50%{ text-shadow: 0 0 10px blue}  
-            100%{ text-shadow: 0 0 2px blue}  
-    }
-.sait{
-    background-color: lightblue;
-}
-
-.mru{
-    background-color:lightgreen;
-}
-
-.ua{
-    background-color:lightsteelblue;
-    
-}
-
-.uc{
-    background-color:lightyellow;
-    
-}
-
 #customers td, #customers th {
   border: 1px solid #ddd;
   padding: 8px;
@@ -166,8 +107,8 @@ select{
     border-radius: 4px;
   background: lightgoldenrodyellow;
 }
-input[type=text], input[type=password],input[type=email],input[type=number]{
-  width: 50%;
+input[type=text], input[type=password],input[type=email] {
+  width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
@@ -194,7 +135,7 @@ hr {
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 70%;
+  width: 100%;
   opacity: 0.9;
 }
 
@@ -222,31 +163,21 @@ hr.rounded {
   border-top: 8px solid #bbb;
   border-radius: 5px;
 }
-#searchTerm {
-  width: 70%;
-  border: 3px solid #00B4CC;
-  border-right: none;
-  padding: 3px;
-  height: 20px;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  color: #9DBFAF;
+
+.sait{
+    background-color: lightblue;
 }
 
-#searchTerm:focus{
-  color: #00B4CC;
+.mru{
+    background-color:lightgreen;
 }
 
-#searchButton {
-  width: 100px;
-  height: 34px;
-  border: 1px solid #00B4CC;
-  background: #00B4CC;
-  text-align: center;
-  color: #fff;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  font-size: 20px;
-  margin-left: -4px;
+.ua{
+    background-color:lightsteelblue;
+    
+}
 
+.uc{
+    background-color:lightyellow;
+    
 }

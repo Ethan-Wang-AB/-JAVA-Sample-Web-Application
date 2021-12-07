@@ -173,7 +173,13 @@ public class AdminServlet extends HttpServlet {
                     if (email.equals(previousEmail)) {
                            String roleName=request.getParameter("roleName");
                     Role role=accountService.getRole(roleName);
-                        accountService.update(email, firstname, lastname,role, password,active);
+                    User user=accountService.get(email);
+                    user.setFirstName(firstname);
+                    user.setLastName(lastname);
+                    user.setRole(role);
+                    user.setPassword(password);
+                    user.setActive(active);
+                        accountService.update(user);
                         userList =  accountService.getAll();
 
                         request.setAttribute("userList", userList);

@@ -99,12 +99,12 @@ public class CategoriesDB {
       public Integer getMaxId(){
          EntityManager em = DBUtil.getEmFactory().createEntityManager();
 
-//        try {
+        try {
             
-              Integer item= em.createNamedQuery("Categjory.Category.findMaxId",Integer.class).getSingleResult();
+              Integer item= em.createNamedQuery("Category.findMaxId",Integer.class).getSingleResult();
             return item;
-//        } finally {
-//            em.close();
-//        }
+        } finally {
+           em.close();
+        }
     }
 }

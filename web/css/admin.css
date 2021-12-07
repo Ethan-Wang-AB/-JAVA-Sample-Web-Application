@@ -163,3 +163,20 @@ hr.rounded {
   border-top: 8px solid #bbb;
   border-radius: 5px;
 }
+.sait{
+    background-color: lightblue;
+}
+
+.mru{
+    background-color:lightgreen;
+}
+
+.ua{
+    background-color:lightsteelblue;
+    
+}
+
+.uc{
+    background-color:lightyellow;
+    
+}

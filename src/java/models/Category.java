@@ -29,10 +29,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "category")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c where c.display=1")
+    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
     , @NamedQuery(name = "Category.findByCategoryId", query = "SELECT c FROM Category c WHERE c.categoryId = :categoryId")
     , @NamedQuery(name = "Category.findByCategoryName", query = "SELECT c FROM Category c WHERE c.categoryName = :categoryName")
-    ,@NamedQuery(name = "Category.findMaxId", query = "SELECT max(c.categoryId) FROM Category c")   
+    , @NamedQuery(name = "Category.findMaxId", query = "SELECT max(c.categoryId) FROM Category c")
     , @NamedQuery(name = "Category.findByDisplay", query = "SELECT c FROM Category c WHERE c.display = :display")})
 public class Category implements Serializable {
 

@@ -7,6 +7,8 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -74,6 +76,13 @@ public class LoginServlet extends HttpServlet {
         }
       
         session.setAttribute("email", email);
+        
+        try {
+            session.setAttribute("company", as.get(email).getCompanyID().getCompanyName().toLowerCase());
+        } catch (Exception ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         
 
         if (user.getRole().getRoleId()==1) {

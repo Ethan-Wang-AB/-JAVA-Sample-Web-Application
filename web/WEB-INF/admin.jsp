@@ -48,7 +48,7 @@
         <hr class="rounded">
 
         <h2>Manage Users</h2>
-        <table id="customers">
+        <table class="${company}" id="customers">
             <tr>
                 <th >Email</th> 
                 <th >First Name</th> 
