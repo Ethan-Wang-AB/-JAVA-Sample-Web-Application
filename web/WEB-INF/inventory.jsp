@@ -32,7 +32,7 @@
         <div class="topnav">
             <c:if test="${isAdmin==true}">
                 <a class="active" href="inventory">Inventory</a>
-
+                 <a href="editcategory">Edit Category</a>
                 <a href="admin">Admin</a>
                 <div class="dropdown">
                     <button class="dropbtn">Reports 
@@ -47,7 +47,7 @@
             </c:if>  
 
             <a href="editprofile">Edit Profile</a>
-            <a href="editcategory">Edit Category</a>
+           
             <a href="login?logout">Logout</a>
 
 

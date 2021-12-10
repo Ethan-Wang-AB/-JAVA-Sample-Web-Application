@@ -36,7 +36,7 @@
         <filter-name>CompanyAdminFilter</filter-name>
         <servlet-name>CompanyAdminServlet</servlet-name>
     </filter-mapping>
-       <filter-mapping>
+    <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <servlet-name>ReportServlet</servlet-name>
     </filter-mapping>
@@ -44,7 +44,16 @@
         <filter-name>AdminFilter</filter-name>
         <servlet-name>AdminServlet</servlet-name>
     </filter-mapping>
-        <filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <servlet-name>EditCategoryServlet</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <servlet-name>EditCategoryServlet</servlet-name>
+    </filter-mapping>
+    
+    <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <servlet-name>ReportServlet</servlet-name>
     </filter-mapping>
