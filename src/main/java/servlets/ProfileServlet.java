@@ -46,6 +46,7 @@ public class ProfileServlet extends HttpServlet {
             request.setAttribute("Address", user.getAddressId());
             request.setAttribute("photo", user.getPhotoPath());
             request.setAttribute("ticket", user.getTicket());
+            
             getServletContext().getRequestDispatcher("/WEB-INF/ProfilePage.jsp").forward(request, response);
     }
 

@@ -84,6 +84,12 @@ INSERT INTO `event_date_user` (`event_date_id`,`user_id`) VALUES (3,5);
 
 INSERT INTO `bike` (`bike_index`,`user_id`,`price`,`toSell`,`donate`) 
    VALUES('123456789A',2,500.5,1,0);
+
+INSERT INTO `bike` (`bike_index`,`user_id`,`price`,`toSell`,`donate`) 
+   VALUES('123456789C',1,500.5,1,0);
+
+INSERT INTO `bike` (`bike_index`,`user_id`,`price`,`toSell`,`donate`) 
+   VALUES('123456789D',1,500.5,1,0);
    
 INSERT INTO `bike` (`bike_index`,`user_id`,`price`,`toSell`,`donate`) 
    VALUES('B123456789',3,610.2,1,0);

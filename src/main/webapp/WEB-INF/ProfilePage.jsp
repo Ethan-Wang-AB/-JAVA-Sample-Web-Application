@@ -81,217 +81,225 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><a href="#">CR1215066H ${Bikeindex}</a></td>
-                                            <td>montague</td>
-                                            <td>Boston</td>
-                                            <td>L</td>
+                                        <c:forEach var="bike" items="${bikes}">
+                                            <tr>
+                                                <td>${bike.getBikeIndex()}</td>
+                                                <td>${bike.getMaker()}</td>
+                                                <td>${bike.getModel()}</td>
+                                                <td>${bike.getSize()}</td>
+                                            </tr>
+                                        </c:forEach>
+                                            <tr>
+                                                <td><a href="#">CR1215066H ${Bikeindex}</a></td>
+                                                <td>montague</td>
+                                                <td>Boston</td>
+                                                <td>L</td>
 
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#">M1407182 ${Bikeindex}</a></td>
-                                            <td>giant</td>
-                                            <td>REVOLT ADVANCED</td>
-                                            <td>M</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#">wsbc920332950p033019113546163 ${Bikeindex}</a></td>
-                                            <td>Specialized</td>
-                                            <td>Sirrus</td>
-                                            <td>M</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="#">nor37775709k ${Bikeindex}</a></td>
-                                            <td>Norco Bikes</td>
-                                            <td>Bigfoot</td>
-                                            <td>M</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="#">M1407182 ${Bikeindex}</a></td>
+                                                <td>giant</td>
+                                                <td>REVOLT ADVANCED</td>
+                                                <td>M</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="#">wsbc920332950p033019113546163 ${Bikeindex}</a></td>
+                                                <td>Specialized</td>
+                                                <td>Sirrus</td>
+                                                <td>M</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="#">nor37775709k ${Bikeindex}</a></td>
+                                                <td>Norco Bikes</td>
+                                                <td>Bigfoot</td>
+                                                <td>M</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
 
-                            </div>
+                                </div>
 
 
-                            <div class="tab-pane" id="tab_default_2">
-                                <p>
-                                    Volunteering
-                                </p>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="tshirtSize">T-Shirt size:</label>
-                                            <p> M ${tshirtSize}</p>
+                                <div class="tab-pane" id="tab_default_2">
+                                    <p>
+                                        Volunteering
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="tshirtSize">T-Shirt size:</label>
+                                                <p> M ${tshirtSize}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Dietary Restrictions:</label>
+                                                <p> No ${diet}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="firstposition">First Position Choice:</label>
+                                                <p> Volunteer / Admin Desk - Supports volunteers and is central point for emergency services (AM/PM)${firstposition}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Second Position Choice:</label>
+                                                <p> Floater - Gets to do a little of everything (AM/PM) ${secondposition}</p>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="email">Dietary Restrictions:</label>
-                                            <p> No ${diet}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="firstposition">First Position Choice:</label>
-                                            <p> Volunteer / Admin Desk - Supports volunteers and is central point for emergency services (AM/PM)${firstposition}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Second Position Choice:</label>
-                                            <p> Floater - Gets to do a little of everything (AM/PM) ${secondposition}</p>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="vShift">City & Shift:</label>
+                                                <p> Calgary / 12 PM - 6 PM ${vShift} </p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Space for other information if needed:</label>
+                                                <p> pune, maharashtra</p>
+                                            </div>
+
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="vShift">City & Shift:</label>
-                                            <p> Calgary / 12 PM - 6 PM ${vShift} </p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Space for other information if needed:</label>
-                                            <p> pune, maharashtra</p>
-                                        </div>
 
+
+
+                                </div>
+
+
+
+                                <div class="tab-pane" id="tab_default_3">
+                                    <p>
+                                        Event Information
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="Location">Location:</label>
+                                                <p> Calgary ${Location}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Date">Date 1:</label>
+                                                <p> 25 August 2022 ${eventDate}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Date">Date 2:</label>
+                                                <p> 26 August 2022 ${eventDate}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Other information section:</label>
+                                                <p> pune, maharashtra</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="email">Other information section::</label>
+                                                <p> pune, maharashtra</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Other information section::</label>
+                                                <p> pune, maharashtra</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Other information section::</label>
+                                                <p> pune, maharashtra</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Other information section::</label>
+                                                <p> pune, maharashtra</p>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
 
-
-
-                            </div>
-
-
-
-                            <div class="tab-pane" id="tab_default_3">
-                                <p>
-                                    Event Information
-                                </p>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="Location">Location:</label>
-                                            <p> Calgary ${Location}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Date">Date 1:</label>
-                                            <p> 25 August 2022 ${eventDate}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Date">Date 2:</label>
-                                            <p> 26 August 2022 ${eventDate}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Other information section:</label>
-                                            <p> pune, maharashtra</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="email">Other information section::</label>
-                                            <p> pune, maharashtra</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Other information section::</label>
-                                            <p> pune, maharashtra</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Other information section::</label>
-                                            <p> pune, maharashtra</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Other information section::</label>
-                                            <p> pune, maharashtra</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-sm-4">
-                <div class="panel panel-default">
-                    <div class="menu_title">
-                        <h2>name ${name}</h2>
-
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="ticket"> Ticket:</label>
-                                    <p>${ticket}</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Phone Number:</label>
-                                    <p>${phone}</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <p>${email}</p>
-                                </div>
-                                <form action="EditProfile"  method="get">
-                                    <button type="submit" class="btn btn-danger btn-block">Edit</button>
-                                </form>
                             </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
-            <c:if test="${roleId==2}">
-                <div id="bikesection" style="display:none">
-                    <h2> Bike Information Section</h2>
-                    <br/> <br/>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="menu_title">
+                            <h2>name ${name}</h2>
 
-
-
-                    <div id="hideValuesOnSelect">
-                        <div class="form-row p-t-20">
-                            <div id="value">
-                                <div class="form-row">
-                                    <div class="name">Bike Index</div>
-                                    <div class="value">
-                                        <div class="input-group">
-                                            <input class="input--style-5" type="text" name="bikeindex">
-                                        </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="ticket"> Ticket:</label>
+                                        <p>${ticket}</p>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="name">Bike Make</div>
-                                    <div class="value">
-                                        <div class="input-group">
-                                            <input class="input--style-5" type="email" name="bikemake">
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number:</label>
+                                        <p>${phone}</p>
                                     </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="name">Bike Type</div>
-                                    <div class="value">
-                                        <div class="input-group">
-                                            <input class="input--style-5" type="email" name="biketype">
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <p>${email}</p>
                                     </div>
+                                    <form action="EditProfile"  method="get">
+                                        <button type="submit" class="btn btn-danger btn-block">Edit</button>
+                                    </form>
                                 </div>
-                                <div class="form-row">
-                                    <div class="name">What is the bike's size?</div>
-                                    <div class="value">
-                                        <div class="input-group">
-                                            <div class="rs-select2 js-select-simple select--no-search">
-                                                <select name="bikesize" >
-                                                    <option disabled="disabled" selected="selected" >Choose the bike size</option>
-                                                    <option value=""></option>
-                                                    <option value="01">S</option>
-                                                    <option value="02">M</option>
-                                                    <option value="03">L</option>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <c:if test="${roleId==2}">
+                    <div id="bikesection" style="display:none">
+                        <h2> Bike Information Section</h2>
+                        <br/> <br/>
 
-                                                </select>
-                                                <div class="select-dropdown"></div>
+
+
+                        <div id="hideValuesOnSelect">
+                            <div class="form-row p-t-20">
+                                <div id="value">
+                                    <div class="form-row">
+                                        <div class="name">Bike Index</div>
+                                        <div class="value">
+                                            <div class="input-group">
+                                                <input class="input--style-5" type="text" name="bikeindex">
                                             </div>
                                         </div>
                                     </div>
-                                </div>    
+                                    <div class="form-row">
+                                        <div class="name">Bike Make</div>
+                                        <div class="value">
+                                            <div class="input-group">
+                                                <input class="input--style-5" type="email" name="bikemake">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="name">Bike Type</div>
+                                        <div class="value">
+                                            <div class="input-group">
+                                                <input class="input--style-5" type="email" name="biketype">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="name">What is the bike's size?</div>
+                                        <div class="value">
+                                            <div class="input-group">
+                                                <div class="rs-select2 js-select-simple select--no-search">
+                                                    <select name="bikesize" >
+                                                        <option disabled="disabled" selected="selected" >Choose the bike size</option>
+                                                        <option value=""></option>
+                                                        <option value="01">S</option>
+                                                        <option value="02">M</option>
+                                                        <option value="03">L</option>
+
+                                                    </select>
+                                                    <div class="select-dropdown"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </c:if>
+            </c:if>
 
-    </div>
-</body>
+        </div>
+    </body>
 </html>
